@@ -10,6 +10,9 @@ public class Patient {
     @Column(name="patient_id")
     private Integer patientId;
 
+    @Column(name="abha_id",unique = true,nullable = false)
+    private String abhaId;
+
     @Column(nullable=false,name="patient_name")
     private String patient_name;
 
@@ -39,8 +42,9 @@ public class Patient {
 
     }
 
-    public Patient(Integer patientId, String patient_name, Date dob, String gender, String education, String socioeconomic_status, String mobile_no, String information_caregiver_name, String relationship_with_patient) {
+    public Patient(Integer patientId, String abhaId, String patient_name, Date dob, String gender, String education, String socioeconomic_status, String mobile_no, String information_caregiver_name, String relationship_with_patient) {
         this.patientId = patientId;
+        this.abhaId = abhaId;
         this.patient_name = patient_name;
         this.dob = dob;
         this.gender = gender;
@@ -57,6 +61,14 @@ public class Patient {
 
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+    }
+
+    public String getAbhaId() {
+        return abhaId;
+    }
+
+    public void setAbhaId(String abhaId) {
+        this.abhaId = abhaId;
     }
 
     public String getPatient_name() {
@@ -121,5 +133,21 @@ public class Patient {
 
     public void setRelationship_with_patient(String relationship_with_patient) {
         this.relationship_with_patient = relationship_with_patient;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "patientId=" + patientId +
+                ", abhaId='" + abhaId + '\'' +
+                ", patient_name='" + patient_name + '\'' +
+                ", dob=" + dob +
+                ", gender='" + gender + '\'' +
+                ", education='" + education + '\'' +
+                ", socioeconomic_status='" + socioeconomic_status + '\'' +
+                ", mobile_no='" + mobile_no + '\'' +
+                ", information_caregiver_name='" + information_caregiver_name + '\'' +
+                ", relationship_with_patient='" + relationship_with_patient + '\'' +
+                '}';
     }
 }
