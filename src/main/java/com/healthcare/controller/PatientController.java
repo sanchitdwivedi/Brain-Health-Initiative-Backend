@@ -16,24 +16,27 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    @PostMapping("/createPatient")
-    public Patient createPatient(@RequestBody Patient patient){
+    @PostMapping("")
+    public Patient createPatient(@RequestBody Patient patient) {
         Patient p = patientService.createPatient(patient);
-        if(p==null) throw new APIRequestException("The provided Patient Info is not a valid one!");
+        if (p == null) throw new APIRequestException("The provided Patient Info is not a valid one!");
         return p;
     }
 
-    @GetMapping("/getAllPatients")
-    public List<Patient> getAllPatient(){
+    @GetMapping("")
+    public List<Patient> getAllPatient() {
         List<Patient> patients = patientService.getAllPatients();
         return patients;
     }
 
     @GetMapping("/{id}")
-    public Patient getPatient(@PathVariable Integer id){
-        return patientService.getPatientByPatientId(id);
+    public Patient getPatientByAbhaId(@PathVariable String id) {
+        return patientService.getPatientByAbhaId(id);
     }
 
-
+    @GetMapping("/getPatient/{mob_no}")
+    public Patient getPatientByMobileNo(@PathVariable String mob_no) {
+        return patientService.getPatientByMobileNo(mob_no);
+    }
 
 }

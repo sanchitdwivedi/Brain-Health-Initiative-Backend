@@ -15,7 +15,7 @@ public class PatientService {
     private PatientDao patientDao;
 
     public Patient createPatient(Patient patient){
-        Patient p=patientDao.findByPatientId(patient.getPatientId());
+        Patient p=patientDao.findByAbhaId(patient.getAbhaId());
         if(p!=null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient already exists!");
        else
@@ -27,8 +27,9 @@ public class PatientService {
         return patients;
     }
 
-    public Patient getPatientByPatientId(Integer id){
-        return patientDao.findByPatientId(id);
+    public Patient getPatientByAbhaId(String id){
+        return patientDao.findByAbhaId(id);
     }
+    public Patient getPatientByMobileNo(String mobNo){ return patientDao.findByMobileNo(mobNo);}
 
 }
