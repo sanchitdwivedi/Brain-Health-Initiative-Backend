@@ -34,7 +34,7 @@ public class PatientController {
         return patientService.getPatientByAbhaId(id);
     }
 
-    @GetMapping("/getPatient/{mob_no}")
+    @GetMapping("/mobile/{mob_no}")
     public Patient getPatientByMobileNo(@PathVariable String mob_no) {
         return patientService.getPatientByMobileNo(mob_no);
     }
