@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ConsultationFormDao extends CrudRepository<ConsultationForm, Integer> {
 
-    @Query("FROM ConsultationForm g where g.abhaId.abhaId= ?1")
+
+    @Query("FROM ConsultationForm g where g.patientId.abhaId= ?1")
     public List<ConsultationForm> findByAbhaId(String id);
 }

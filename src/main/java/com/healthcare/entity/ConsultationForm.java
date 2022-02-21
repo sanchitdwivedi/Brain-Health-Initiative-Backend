@@ -12,8 +12,8 @@ public class ConsultationForm {
     private Integer formId;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name="abha_id")
-    private Patient abhaId;
+    @JoinColumn(nullable = false, name="patient_id")
+    private Patient patientId;
 
     @ManyToOne
     @JoinColumn(nullable = false, name="doctor_id")
@@ -75,10 +75,10 @@ public class ConsultationForm {
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient abhaId, Doctor doctorId, Hospital hospitalId, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String idc10code, ImprovementType improvementtype, String medicineName, String dosage, DosingTime dosingtime, Date duration, Date dateAndTime, String remarks,
-                            String treatmentInstructions, String followUp, Integer refer) {
+    public ConsultationForm(Integer formId, Patient patientId, Doctor doctorId, Hospital hospitalId, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String idc10code, ImprovementType improvementtype, String medicineName, String dosage, DosingTime dosingtime, Date duration, Date dateAndTime,
+                            String remarks, String treatmentInstructions, String followUp, Integer refer) {
         this.formId = formId;
-        this.abhaId = abhaId;
+        this.patientId = patientId;
         this.doctorId = doctorId;
         this.hospitalId = hospitalId;
         this.compliant = compliant;
@@ -107,12 +107,12 @@ public class ConsultationForm {
         this.formId = formId;
     }
 
-    public Patient getAbhaId() {
-        return abhaId;
+    public Patient getPatientId() {
+        return patientId;
     }
 
-    public void setAbhaId(Patient abhaId) {
-        this.abhaId = abhaId;
+    public void setPatientId(Patient patientId) {
+        this.patientId = patientId;
     }
 
     public Doctor getDoctorId() {
@@ -263,7 +263,7 @@ public class ConsultationForm {
     public String toString() {
         return "ConsultationForm{" +
                 "formId=" + formId +
-                ", abhaId=" + abhaId +
+                ", patientId=" + patientId +
                 ", doctorId=" + doctorId +
                 ", hospitalId=" + hospitalId +
                 ", compliant='" + compliant + '\'' +
