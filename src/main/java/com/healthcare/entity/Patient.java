@@ -5,11 +5,12 @@ import java.util.Date;
 
 @Entity
 public class Patient {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="patient_id")
     private Integer patientId;
 
+    @Id
     @Column(name="abha_id",unique = true,nullable = false)
     private String abhaId;
 
