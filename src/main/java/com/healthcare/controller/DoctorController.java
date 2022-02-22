@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/doctor")
@@ -26,6 +27,13 @@ public class DoctorController {
     public List<Doctor> getAllDoctors(){
         List<Doctor> doctors = doctorService.getAllDoctors();
         return doctors;
+    }
+
+    @PutMapping("/{id}")
+    public Doctor updatePassword(@PathVariable long id, @RequestBody Map<String, String> object){
+        Doctor doctor = doctorService.updatePassword(id, object.get("newPassword"));
+        if(doctor==null) throw new APIRequestException("Cannot change password of doctor with id: " + id);
+        return doctor;
     }
 
     @GetMapping("/{id}")
