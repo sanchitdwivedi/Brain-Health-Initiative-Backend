@@ -45,8 +45,8 @@ public class Patient {
     @Column(name="address_line_2")
     private String address_line_2;
 
-    @Column(nullable=false,name="city")
-    private String city;
+    @Column(nullable=false,name="district")
+    private String district;
 
     @Column(nullable=false,name="state")
     private String state;
@@ -65,7 +65,7 @@ public class Patient {
 
     }
 
-    public Patient(Integer patientId, String abhaId, String first_name, String last_name, Date dob, Gender gender, String education, Socioeconomic socioeconomic_status, Long mobile_no, String address_line_1, String address_line_2, String city, String state, Long pin_code, String information_caregiver_name, String relationship_with_patient) {
+    public Patient(Integer patientId, String abhaId, String first_name, String last_name, Date dob, Gender gender, String education, Socioeconomic socioeconomic_status, Long mobile_no, String address_line_1, String address_line_2, String district, String state, Long pin_code, String information_caregiver_name, String relationship_with_patient) {
         this.patientId = patientId;
         this.abhaId = abhaId;
         this.first_name = first_name;
@@ -77,7 +77,7 @@ public class Patient {
         this.mobile_no = mobile_no;
         this.address_line_1 = address_line_1;
         this.address_line_2 = address_line_2;
-        this.city = city;
+        this.district = district;
         this.state = state;
         this.pin_code = pin_code;
         this.information_caregiver_name = information_caregiver_name;
@@ -88,124 +88,124 @@ public class Patient {
         return patientId;
     }
 
-    public String getAbhaId() {
-        return abhaId;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public Socioeconomic getSocioeconomic_status() {
-        return socioeconomic_status;
-    }
-
-    public Long getMobile_no() {
-        return mobile_no;
-    }
-
-    public String getAddress_line_1() {
-        return address_line_1;
-    }
-
-    public String getAddress_line_2() {
-        return address_line_2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public Long getPin_code() {
-        return pin_code;
-    }
-
-    public String getInformation_caregiver_name() {
-        return information_caregiver_name;
-    }
-
-    public String getRelationship_with_patient() {
-        return relationship_with_patient;
-    }
-
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+    }
+
+    public String getAbhaId() {
+        return abhaId;
     }
 
     public void setAbhaId(String abhaId) {
         this.abhaId = abhaId;
     }
 
+    public String getFirst_name() {
+        return first_name;
+    }
+
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
     }
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
 
+    public Date getDob() {
+        return dob;
+    }
+
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
+    public String getEducation() {
+        return education;
+    }
+
     public void setEducation(String education) {
         this.education = education;
+    }
+
+    public Socioeconomic getSocioeconomic_status() {
+        return socioeconomic_status;
     }
 
     public void setSocioeconomic_status(Socioeconomic socioeconomic_status) {
         this.socioeconomic_status = socioeconomic_status;
     }
 
+    public Long getMobile_no() {
+        return mobile_no;
+    }
+
     public void setMobile_no(Long mobile_no) {
         this.mobile_no = mobile_no;
+    }
+
+    public String getAddress_line_1() {
+        return address_line_1;
     }
 
     public void setAddress_line_1(String address_line_1) {
         this.address_line_1 = address_line_1;
     }
 
+    public String getAddress_line_2() {
+        return address_line_2;
+    }
+
     public void setAddress_line_2(String address_line_2) {
         this.address_line_2 = address_line_2;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getState() {
+        return state;
     }
 
     public void setState(String state) {
         this.state = state;
     }
 
+    public Long getPin_code() {
+        return pin_code;
+    }
+
     public void setPin_code(Long pin_code) {
         this.pin_code = pin_code;
     }
 
+    public String getInformation_caregiver_name() {
+        return information_caregiver_name;
+    }
+
     public void setInformation_caregiver_name(String information_caregiver_name) {
         this.information_caregiver_name = information_caregiver_name;
+    }
+
+    public String getRelationship_with_patient() {
+        return relationship_with_patient;
     }
 
     public void setRelationship_with_patient(String relationship_with_patient) {
@@ -220,15 +220,15 @@ public class Patient {
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", dob=" + dob +
-                ", gender='" + gender + '\'' +
+                ", gender=" + gender +
                 ", education='" + education + '\'' +
-                ", socioeconomic_status='" + socioeconomic_status + '\'' +
-                ", mobile_no='" + mobile_no + '\'' +
+                ", socioeconomic_status=" + socioeconomic_status +
+                ", mobile_no=" + mobile_no +
                 ", address_line_1='" + address_line_1 + '\'' +
-                ", address_line_1='" + address_line_2 + '\'' +
-                ", city='" + city + '\'' +
+                ", address_line_2='" + address_line_2 + '\'' +
+                ", district='" + district + '\'' +
                 ", state='" + state + '\'' +
-                ", pine_code='" + pin_code + '\'' +
+                ", pin_code=" + pin_code +
                 ", information_caregiver_name='" + information_caregiver_name + '\'' +
                 ", relationship_with_patient='" + relationship_with_patient + '\'' +
                 '}';
