@@ -1,5 +1,7 @@
 package com.healthcare.entity;
 
+import com.healthcare.enumeration.Gender;
+
 import javax.persistence.*;
 
 @Entity
@@ -30,7 +32,7 @@ public class Doctor {
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private GenderEnum gender;
+    private Gender gender;
     @Column(name = "status", nullable = false)
     private Integer status = 0;
 
@@ -45,7 +47,7 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, GenderEnum gender, Integer status, Hospital hospital, Role role) {
+    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, Gender gender, Integer status, Hospital hospital, Role role) {
         this.doctorId = doctorId;
         this.healthId = healthId;
         this.firstName = firstName;
@@ -151,11 +153,11 @@ public class Doctor {
         this.password = password;
     }
 
-    public GenderEnum getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(GenderEnum gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
