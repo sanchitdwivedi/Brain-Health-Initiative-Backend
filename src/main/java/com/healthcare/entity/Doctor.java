@@ -28,8 +28,11 @@ public class Doctor {
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private String gender;
+    private GenderEnum gender;
+    @Column(name = "status", nullable = false)
+    private Integer status = 0;
 
     @ManyToOne
     @JoinColumn(name="hospital_id", nullable = false)
@@ -42,7 +45,7 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, String gender, Hospital hospital, Role role) {
+    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, GenderEnum gender, Integer status, Hospital hospital, Role role) {
         this.doctorId = doctorId;
         this.healthId = healthId;
         this.firstName = firstName;
@@ -55,6 +58,7 @@ public class Doctor {
         this.email = email;
         this.password = password;
         this.gender = gender;
+        this.status = status;
         this.hospital = hospital;
         this.role = role;
     }
@@ -147,12 +151,20 @@ public class Doctor {
         this.password = password;
     }
 
-    public String getGender() {
+    public GenderEnum getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(GenderEnum gender) {
         this.gender = gender;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Hospital getHospital() {
@@ -185,7 +197,8 @@ public class Doctor {
                 ", mobileNo=" + mobileNo +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", gender='" + gender + '\'' +
+                ", gender=" + gender +
+                ", status=" + status +
                 ", hospital=" + hospital +
                 ", role=" + role +
                 '}';

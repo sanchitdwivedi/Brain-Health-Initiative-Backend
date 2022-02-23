@@ -43,6 +43,14 @@ public class DoctorService {
         return doctorDao.findByHealthId(id);
     }
 
+    public Doctor updatePassword(long id, String password){
+        Doctor doctor = doctorDao.findByHealthId(id);
+        if(doctor==null || doctor.getStatus()==1) return null;
+        doctor.setPassword(getEncodedPassword(password));
+        doctor.setStatus(1);
+        return doctorDao.save(doctor);
+    }
+
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
     }
