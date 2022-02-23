@@ -36,7 +36,4 @@ public class ConsultationFormService {
 
         return consultationFormDao.findByAbhaId(id);
     }
-
-
-
 }

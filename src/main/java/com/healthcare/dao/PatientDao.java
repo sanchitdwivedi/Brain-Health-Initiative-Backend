@@ -9,6 +9,6 @@ public interface PatientDao extends CrudRepository<Patient,Integer> {
     public Patient findByAbhaId(String id);
 
     @Query("SELECT p FROM Patient p WHERE p.mobile_no=?1")
-    public Patient findByMobileNo(String id);
+    public Patient findByMobileNo(Long id);
 
 }

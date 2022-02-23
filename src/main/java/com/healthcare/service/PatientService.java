@@ -30,6 +30,6 @@ public class PatientService {
     public Patient getPatientByAbhaId(String id){
         return patientDao.findByAbhaId(id);
     }
-    public Patient getPatientByMobileNo(String mobNo){ return patientDao.findByMobileNo(mobNo);}
+    public Patient getPatientByMobileNo(Long mobNo){ return patientDao.findByMobileNo(mobNo);}
 
 }

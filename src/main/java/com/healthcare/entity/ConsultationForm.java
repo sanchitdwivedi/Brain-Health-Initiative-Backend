@@ -1,5 +1,9 @@
 package com.healthcare.entity;
 
+import com.healthcare.enumeration.DiagnosisType;
+import com.healthcare.enumeration.ICDCode;
+import com.healthcare.enumeration.ImprovementType;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +30,7 @@ public class ConsultationForm {
     @Column(nullable = false, name="compliant")
     private String compliant;
 
-    @Column(nullable = false, name="Examination")
+    @Column(nullable = false, name="examination")
     private String examination;
 
     @Column(nullable = false, name="illness_summary")
@@ -39,20 +43,22 @@ public class ConsultationForm {
     @Column(nullable = false, name="icd_description")
     private String icdDescription;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, name="idc_10code")
-    private String idc10code;
+    private ICDCode idc10code;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, name="improvement_type")
     private ImprovementType improvementtype;
 
-    @Column(nullable = false, name="medicine_name")
+    @Column(name="medicine_name")
     private String medicineName;
 
     @Column(nullable = false, name="dosage")
     private String dosage;
 
     @Column(nullable = false, name="dosing_time")
-    private DosingTime dosingtime;
+    private String dosingtime;
 
     @Column(nullable = false, name="duration")
     private Date duration;
@@ -60,22 +66,22 @@ public class ConsultationForm {
     @Column(nullable = false, name="date_and_time")
     private Date dateAndTime;
 
-    @Column(nullable = false, name="remarks")
+    @Column(name="remarks")
     private String remarks;
 
     @Column(nullable = false, name="treatment_instructions")
     private String treatmentInstructions;
 
-    @Column(nullable = false, name="follow_up")
+    @Column(name="follow_up")
     private String followUp;
 
-    @Column(nullable=false, name="refer")
+    @Column(name="refer")
     private Integer refer;
 
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient patientId, Doctor doctorId, Hospital hospitalId, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String idc10code, ImprovementType improvementtype, String medicineName, String dosage, DosingTime dosingtime, Date duration, Date dateAndTime,
+    public ConsultationForm(Integer formId, Patient patientId, Doctor doctorId, Hospital hospitalId, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, String medicineName, String dosage, String dosingtime, Date duration, Date dateAndTime,
                             String remarks, String treatmentInstructions, String followUp, Integer refer) {
         this.formId = formId;
         this.patientId = patientId;
@@ -103,156 +109,156 @@ public class ConsultationForm {
         return formId;
     }
 
-    public void setFormId(Integer formId) {
-        this.formId = formId;
-    }
-
     public Patient getPatientId() {
         return patientId;
-    }
-
-    public void setPatientId(Patient patientId) {
-        this.patientId = patientId;
     }
 
     public Doctor getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(Doctor doctorId) {
-        this.doctorId = doctorId;
-    }
-
     public Hospital getHospitalId() {
         return hospitalId;
-    }
-
-    public void setHospitalId(Hospital hospitalId) {
-        this.hospitalId = hospitalId;
     }
 
     public String getCompliant() {
         return compliant;
     }
 
-    public void setCompliant(String compliant) {
-        this.compliant = compliant;
-    }
-
     public String getExamination() {
         return examination;
-    }
-
-    public void setExamination(String examination) {
-        this.examination = examination;
     }
 
     public String getIllnessSummary() {
         return illnessSummary;
     }
 
-    public void setIllnessSummary(String illnessSummary) {
-        this.illnessSummary = illnessSummary;
-    }
-
     public DiagnosisType getDiagnosistype() {
         return diagnosistype;
-    }
-
-    public void setDiagnosistype(DiagnosisType diagnosistype) {
-        this.diagnosistype = diagnosistype;
     }
 
     public String getIcdDescription() {
         return icdDescription;
     }
 
-    public void setIcdDescription(String icdDescription) {
-        this.icdDescription = icdDescription;
-    }
-
-    public String getIdc10code() {
+    public ICDCode getIdc10code() {
         return idc10code;
-    }
-
-    public void setIdc10code(String idc10code) {
-        this.idc10code = idc10code;
     }
 
     public ImprovementType getImprovementtype() {
         return improvementtype;
     }
 
-    public void setImprovementtype(ImprovementType improvementtype) {
-        this.improvementtype = improvementtype;
-    }
-
     public String getMedicineName() {
         return medicineName;
-    }
-
-    public void setMedicineName(String medicineName) {
-        this.medicineName = medicineName;
     }
 
     public String getDosage() {
         return dosage;
     }
 
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
-    }
-
-    public DosingTime getDosingtime() {
+    public String getDosingtime() {
         return dosingtime;
-    }
-
-    public void setDosingtime(DosingTime dosingtime) {
-        this.dosingtime = dosingtime;
     }
 
     public Date getDuration() {
         return duration;
     }
 
-    public void setDuration(Date duration) {
-        this.duration = duration;
-    }
-
     public Date getDateAndTime() {
         return dateAndTime;
-    }
-
-    public void setDateAndTime(Date dateAndTime) {
-        this.dateAndTime = dateAndTime;
     }
 
     public String getRemarks() {
         return remarks;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
     public String getTreatmentInstructions() {
         return treatmentInstructions;
-    }
-
-    public void setTreatmentInstructions(String treatmentInstructions) {
-        this.treatmentInstructions = treatmentInstructions;
     }
 
     public String getFollowUp() {
         return followUp;
     }
 
-    public void setFollowUp(String followUp) {
-        this.followUp = followUp;
-    }
-
     public Integer getRefer() {
         return refer;
+    }
+
+    public void setFormId(Integer formId) {
+        this.formId = formId;
+    }
+
+    public void setPatientId(Patient patientId) {
+        this.patientId = patientId;
+    }
+
+    public void setDoctorId(Doctor doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public void setHospitalId(Hospital hospitalId) {
+        this.hospitalId = hospitalId;
+    }
+
+    public void setCompliant(String compliant) {
+        this.compliant = compliant;
+    }
+
+    public void setExamination(String examination) {
+        this.examination = examination;
+    }
+
+    public void setIllnessSummary(String illnessSummary) {
+        this.illnessSummary = illnessSummary;
+    }
+
+    public void setDiagnosistype(DiagnosisType diagnosistype) {
+        this.diagnosistype = diagnosistype;
+    }
+
+    public void setIcdDescription(String icdDescription) {
+        this.icdDescription = icdDescription;
+    }
+
+    public void setIdc10code(ICDCode idc10code) {
+        this.idc10code = idc10code;
+    }
+
+    public void setImprovementtype(ImprovementType improvementtype) {
+        this.improvementtype = improvementtype;
+    }
+
+    public void setMedicineName(String medicineName) {
+        this.medicineName = medicineName;
+    }
+
+    public void setDosage(String dosage) {
+        this.dosage = dosage;
+    }
+
+    public void setDosingtime(String dosingtime) {
+        this.dosingtime = dosingtime;
+    }
+
+    public void setDuration(Date duration) {
+        this.duration = duration;
+    }
+
+    public void setDateAndTime(Date dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public void setTreatmentInstructions(String treatmentInstructions) {
+        this.treatmentInstructions = treatmentInstructions;
+    }
+
+    public void setFollowUp(String followUp) {
+        this.followUp = followUp;
     }
 
     public void setRefer(Integer refer) {
