@@ -1,8 +1,12 @@
 package com.healthcare.entity;
 
+import com.healthcare.enumeration.EnumValidator;
 import com.healthcare.enumeration.Gender;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Doctor {
@@ -10,6 +14,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
     private Integer doctorId;
+    @Range(min = 100000000000l, max = 999999999999l, message = "Health ID must be of 12 digits")
     @Column(nullable = false, unique = true, name = "health_id")
     private Long healthId;
     @Column(nullable = false, name = "first_name")
@@ -22,17 +27,24 @@ public class Doctor {
     private String district;
     @Column(nullable = false, name = "city")
     private String city;
+    @Range(min = 100000, max = 999999, message = "Pincode must be of 6 digits")
     @Column(nullable = false, name = "pincode")
     private Integer pincode;
+    @Range(min = 1000000000, max = 9999999999l, message = "Mobile no. must be of 10 digits")
     @Column(nullable = false, name = "mobile_no")
     private Long mobileNo;
+    @Email
     @Column(name = "email")
     private String email;
+    @Size(min = 8, message = "Password must be atleast {min} characters long")
     @Column(name = "password", nullable = false)
     private String password;
-    @Enumerated(EnumType.STRING)
+    @EnumValidator(
+            enumClazz = Gender.class,
+            message = "Invalid gender value"
+    )
     @Column(name = "gender")
-    private Gender gender;
+    private String gender;
     @Column(name = "status", nullable = false)
     private Integer status = 0;
 
@@ -47,7 +59,7 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, Gender gender, Integer status, Hospital hospital, Role role) {
+    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, String gender, Integer status, Hospital hospital, Role role) {
         this.doctorId = doctorId;
         this.healthId = healthId;
         this.firstName = firstName;
@@ -153,12 +165,12 @@ public class Doctor {
         this.password = password;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        this.gender = gender.toUpperCase();
     }
 
     public Integer getStatus() {

@@ -1,9 +1,13 @@
 package com.healthcare.entity;
 
+import com.healthcare.enumeration.EnumValidator;
 import com.healthcare.enumeration.Gender;
 import com.healthcare.enumeration.Socioeconomic;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -13,6 +17,7 @@ public class Patient {
     @Column(name="patient_id")
     private Integer patientId;
 
+    @Size(min = 12, max = 12, message = "ABHA ID must be of 12 digits")
     @Column(name="abha_id",unique = true,nullable = false)
     private String abhaId;
 
@@ -22,20 +27,28 @@ public class Patient {
     @Column(nullable=false,name="last_name")
     private String last_name;
 
+    @PastOrPresent
     @Column(name="dob")
     private Date dob;
 
-    @Enumerated(EnumType.ORDINAL)
+    @EnumValidator(
+            enumClazz = Gender.class,
+            message = "Invalid gender value"
+    )
     @Column(name="gender",nullable=false)
-    private Gender gender;
+    private String gender;
 
     @Column(nullable=false,name="education")
     private String education;
 
-    @Enumerated(EnumType.ORDINAL)
+    @EnumValidator(
+            enumClazz = Socioeconomic.class,
+            message = "Invalid socio-economic status"
+    )
     @Column(nullable=false,name="socioeconomic_status")
-    private Socioeconomic socioeconomic_status;
+    private String socioeconomic_status;
 
+    @Range(min = 1000000000, max = 9999999999l, message = "Mobile no. must be of 10 digits")
     @Column(nullable=false,name="mobile_no")
     private Long mobile_no;
 
@@ -51,6 +64,7 @@ public class Patient {
     @Column(nullable=false,name="state")
     private String state;
 
+    @Range(min = 100000, max = 999999, message = "Pincode must be of 6 digits")
     @Column(nullable=false,name="pin_code")
     private Long pin_code;
 
@@ -65,7 +79,7 @@ public class Patient {
 
     }
 
-    public Patient(Integer patientId, String abhaId, String first_name, String last_name, Date dob, Gender gender, String education, Socioeconomic socioeconomic_status, Long mobile_no, String address_line_1, String address_line_2, String district, String state, Long pin_code, String information_caregiver_name, String relationship_with_patient) {
+    public Patient(Integer patientId, String abhaId, String first_name, String last_name, Date dob, String gender, String education, String socioeconomic_status, Long mobile_no, String address_line_1, String address_line_2, String district, String state, Long pin_code, String information_caregiver_name, String relationship_with_patient) {
         this.patientId = patientId;
         this.abhaId = abhaId;
         this.first_name = first_name;
@@ -124,11 +138,11 @@ public class Patient {
         this.dob = dob;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -140,11 +154,11 @@ public class Patient {
         this.education = education;
     }
 
-    public Socioeconomic getSocioeconomic_status() {
+    public String getSocioeconomic_status() {
         return socioeconomic_status;
     }
 
-    public void setSocioeconomic_status(Socioeconomic socioeconomic_status) {
+    public void setSocioeconomic_status(String socioeconomic_status) {
         this.socioeconomic_status = socioeconomic_status;
     }
 
@@ -220,7 +234,7 @@ public class Patient {
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", dob=" + dob +
-                ", gender=" + gender +
+                ", gender='" + gender + '\'' +
                 ", education='" + education + '\'' +
                 ", socioeconomic_status=" + socioeconomic_status +
                 ", mobile_no=" + mobile_no +

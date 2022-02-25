@@ -2,6 +2,7 @@ package com.healthcare.service;
 
 import com.healthcare.dao.LevelDao;
 import com.healthcare.entity.Level;
+import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,11 @@ public class LevelService {
     private LevelDao levelDao;
 
     public Level createLevel(Level level){
-        return levelDao.save(level);
+        try {
+            return levelDao.save(level);
+        } catch (Exception e){
+            throw new APIRequestException("A level is already present with name: " + level.getLevelName());
+        }
     }
 
     public List<Level> getAllLevels(){

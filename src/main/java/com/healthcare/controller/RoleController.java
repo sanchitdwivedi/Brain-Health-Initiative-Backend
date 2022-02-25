@@ -1,6 +1,7 @@
 package com.healthcare.controller;
 
 import com.healthcare.entity.Role;
+import com.healthcare.exception.APIRequestException;
 import com.healthcare.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

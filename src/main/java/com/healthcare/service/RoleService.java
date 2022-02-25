@@ -2,6 +2,7 @@ package com.healthcare.service;
 
 import com.healthcare.dao.RoleDao;
 import com.healthcare.entity.Role;
+import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,11 @@ public class RoleService {
     private RoleDao roleDao;
 
     public Role createRole(Role role){
-        return roleDao.save(role);
+        try{
+            return roleDao.save(role);
+        } catch (Exception e){
+            throw new APIRequestException("A role is already present with name: " + role.getRoleName());
+        }
     }
 
     public List<Role> getAllRoles(){

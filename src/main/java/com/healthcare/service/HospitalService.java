@@ -4,6 +4,7 @@ import com.healthcare.dao.HospitalDao;
 import com.healthcare.dao.LevelDao;
 import com.healthcare.entity.Hospital;
 import com.healthcare.entity.Level;
+import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,13 @@ public class HospitalService {
 
     public Hospital createHospital(Hospital hospital){
         Level level = levelDao.findByLevelName(hospital.getLevel().getLevelName());
-        if(level==null) return null;
+        if(level==null) throw new APIRequestException("Invalid level");
         hospital.setLevel(level);
-        return hospitalDao.save(hospital);
+        try {
+            return hospitalDao.save(hospital);
+        } catch (Exception e){
+            throw new APIRequestException("An hospital is already present with name: " + hospital.getHospitalName());
+        }
     }
 
     public List<Hospital> getAllHospitals(){

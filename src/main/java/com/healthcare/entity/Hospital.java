@@ -1,6 +1,9 @@
 package com.healthcare.entity;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Hospital {
@@ -16,6 +19,7 @@ public class Hospital {
     private String district;
     @Column(nullable = false, name = "city")
     private String city;
+    @Range(min = 100000, max = 999999, message = "Pincode must be of 6 digits")
     @Column(nullable = false, name = "pincode")
     private Integer pincode;
 

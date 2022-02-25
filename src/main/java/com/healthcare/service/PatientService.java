@@ -2,6 +2,7 @@ package com.healthcare.service;
 
 import com.healthcare.dao.PatientDao;
 import com.healthcare.entity.Patient;
+import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,11 @@ public class PatientService {
     private PatientDao patientDao;
 
     public Patient createPatient(Patient patient){
-        Patient p=patientDao.findByAbhaId(patient.getAbhaId());
-        if(p!=null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient already exists!");
-       else
-            return patientDao.save(patient);
+       try {
+           return patientDao.save(patient);
+       } catch (Exception e) {
+           throw new APIRequestException("A patient is already registered with id: " + patient.getAbhaId());
+       }
     }
 
     public List<Patient> getAllPatients(){
@@ -30,6 +31,12 @@ public class PatientService {
     public Patient getPatientByAbhaId(String id){
         return patientDao.findByAbhaId(id);
     }
-    public Patient getPatientByMobileNo(Long mobNo){ return patientDao.findByMobileNo(mobNo);}
+    public List<Patient> getPatientsByMobileNo(String mobNo){
+        try {
+            return patientDao.findByMobileNo(Long.parseLong(mobNo));
+        } catch (NumberFormatException e){
+            throw new APIRequestException("Invalid mobile number");
+        }
+    }
 
 }

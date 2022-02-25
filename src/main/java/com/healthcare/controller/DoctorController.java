@@ -1,12 +1,14 @@
 package com.healthcare.controller;
 
 import com.healthcare.entity.Doctor;
-import com.healthcare.exception.APIRequestException;
 import com.healthcare.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +19,9 @@ public class DoctorController {
     private DoctorService doctorService;
 
     @PostMapping("")
-    public Doctor createDoctor(@RequestBody Doctor doctor){
+    public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody Doctor doctor){
         Doctor d = doctorService.createDoctor(doctor);
-        if(d==null) throw new APIRequestException("The provided role/hospital is not a valid one!");
-        return d;
+        return new ResponseEntity<Doctor>(d, HttpStatus.CREATED);
     }
 
     @GetMapping("")
@@ -30,10 +31,9 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public Doctor updatePassword(@PathVariable long id, @RequestBody Map<String, String> object){
+    public ResponseEntity<Doctor> updatePassword(@PathVariable long id, @RequestBody Map<String, String> object){
         Doctor doctor = doctorService.updatePassword(id, object.get("newPassword"));
-        if(doctor==null) throw new APIRequestException("Cannot change password of doctor with id: " + id);
-        return doctor;
+        return new ResponseEntity<Doctor>(doctor, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

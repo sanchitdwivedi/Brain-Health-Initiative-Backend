@@ -4,8 +4,11 @@ import com.healthcare.entity.Hospital;
 import com.healthcare.exception.APIRequestException;
 import com.healthcare.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,10 +18,9 @@ public class HospitalController {
     private HospitalService hospitalService;
 
     @PostMapping("")
-    public Hospital createHospital(@RequestBody Hospital hospital){
+    public ResponseEntity<Hospital> createHospital(@Valid @RequestBody Hospital hospital){
         Hospital h = hospitalService.createHospital(hospital);
-        if(h==null) throw new APIRequestException("The provided level is not a valid one!");
-        return h;
+        return new ResponseEntity<Hospital>(h, HttpStatus.CREATED);
     }
 
     @GetMapping("")

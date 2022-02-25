@@ -2,11 +2,13 @@ package com.healthcare.controller;
 
 
 import com.healthcare.entity.Patient;
-import com.healthcare.exception.APIRequestException;
 import com.healthcare.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,10 +19,9 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping("")
-    public Patient createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
         Patient p = patientService.createPatient(patient);
-        if (p == null) throw new APIRequestException("The provided Patient Info is not a valid one!");
-        return p;
+        return new ResponseEntity<Patient>(p, HttpStatus.CREATED);
     }
 
     @GetMapping("")
@@ -35,8 +36,8 @@ public class PatientController {
     }
 
     @GetMapping("/mobile/{mob_no}")
-    public Patient getPatientByMobileNo(@PathVariable Long mob_no) {
-        return patientService.getPatientByMobileNo(mob_no);
+    public List<Patient> getPatientsByMobileNo(@PathVariable String mob_no) {
+        return patientService.getPatientsByMobileNo(mob_no);
     }
 
 }
