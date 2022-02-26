@@ -2,43 +2,56 @@ package com.healthcare.entity;
 
 import com.healthcare.enumeration.EnumValidator;
 import com.healthcare.enumeration.Gender;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "uuid")
     private Integer uuid;
     @OneToOne
     @JoinColumn(name = "doctor", nullable = false)
     private User doctor;
+    @NotBlank
     @Column(nullable = false, name = "first_name")
     private String firstName;
+    @NotBlank
     @Column(nullable = false, name = "last_name")
     private String lastName;
+    @NotBlank
     @Column(nullable = false, name = "state")
     private String state;
+    @NotBlank
     @Column(nullable = false, name = "district")
     private String district;
+    @NotBlank
     @Column(nullable = false, name = "city")
     private String city;
+    @NotNull
     @Range(min = 100000, max = 999999, message = "Pincode must be of 6 digits")
     @Column(nullable = false, name = "pincode")
     private Integer pincode;
+    @NotNull
     @Range(min = 1000000000, max = 9999999999l, message = "Mobile no. must be of 10 digits")
     @Column(nullable = false, name = "mobile_no")
     private Long mobileNo;
     @Email
     @Column(name = "email")
     private String email;
+    @NotBlank
     @EnumValidator(
             enumClazz = Gender.class,
             message = "Invalid gender value"
     )
+    @Schema(allowableValues = { "MALE", "FEMALE", "OTHER" })
     @Column(name = "gender")
     private String gender;
 
@@ -149,7 +162,7 @@ public class Doctor {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.gender = gender.toUpperCase();
     }
 
     public Hospital getHospital() {

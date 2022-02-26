@@ -3,8 +3,6 @@ package com.healthcare.exception;
 import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class APIException {

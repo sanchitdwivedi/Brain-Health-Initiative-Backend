@@ -1,24 +1,32 @@
 package com.healthcare.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "hospital_id")
     private Integer hospitalId;
+    @NotBlank
     @Column(name = "hospital_name", nullable = false, unique = true)
     private String hospitalName;
+    @NotBlank
     @Column(nullable = false, name = "state")
     private String state;
+    @NotBlank
     @Column(nullable = false, name = "district")
     private String district;
+    @NotBlank
     @Column(nullable = false, name = "city")
     private String city;
+    @NotNull
     @Range(min = 100000, max = 999999, message = "Pincode must be of 6 digits")
     @Column(nullable = false, name = "pincode")
     private Integer pincode;

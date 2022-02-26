@@ -1,6 +1,5 @@
 package com.healthcare.service;
 
-import com.healthcare.dao.DoctorDao;
 import com.healthcare.dao.UserDao;
 import com.healthcare.entity.JwtRequest;
 import com.healthcare.entity.JwtResponse;

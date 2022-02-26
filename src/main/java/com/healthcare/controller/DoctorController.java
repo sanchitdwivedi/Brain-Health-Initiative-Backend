@@ -2,17 +2,21 @@ package com.healthcare.controller;
 
 import com.healthcare.entity.Doctor;
 import com.healthcare.service.DoctorService;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
+@SecurityRequirement(name = "Brain Health Initiative API")
+@Tag(name = "Doctor")
 @RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
@@ -31,8 +35,9 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updatePassword(@PathVariable long id, @RequestBody Map<String, String> object){
-        Doctor doctor = doctorService.updatePassword(id, object.get("newPassword"));
+    public ResponseEntity<Doctor> updatePassword(@PathVariable long id, @Schema(description = "Password must be atleast 8 characters long",
+                            example = "{\"newPassword\":\"string\"}") @RequestBody HashMap<String, String> object){
+        Doctor doctor = doctorService.updatePassword(id, object);
         return new ResponseEntity<Doctor>(doctor, HttpStatus.CREATED);
     }
 
@@ -41,15 +46,15 @@ public class DoctorController {
         return doctorService.getDoctorByHealthId(id);
     }
 
-    @GetMapping("/specialist")
-    @PreAuthorize("hasRole('specialist')")
-    public String forSpecialist(){
-        return "Welcome Specialist";
-    }
-
-    @GetMapping("/medical-officer")
-    @PreAuthorize("hasRole('medical officer')")
-    public String forMedicalOfficer(){
-        return "Welcome Medical officer";
-    }
+//    @GetMapping("/specialist")
+//    @PreAuthorize("hasRole('specialist')")
+//    public String forSpecialist(){
+//        return "Welcome Specialist";
+//    }
+//
+//    @GetMapping("/medical-officer")
+//    @PreAuthorize("hasRole('medical officer')")
+//    public String forMedicalOfficer(){
+//        return "Welcome Medical officer";
+//    }
 }

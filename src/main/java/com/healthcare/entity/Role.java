@@ -1,13 +1,18 @@
 package com.healthcare.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "role_id")
     private Integer roleId;
+    @NotBlank
     @Column(name = "role_name", nullable = false, unique = true)
     private String roleName;
     @Column(name = "role_description")

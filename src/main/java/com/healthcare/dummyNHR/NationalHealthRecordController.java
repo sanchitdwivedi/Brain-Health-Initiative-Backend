@@ -1,12 +1,14 @@
 package com.healthcare.dummyNHR;
 
 import com.healthcare.exception.APIRequestException;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Hidden
 @RequestMapping("/NHR")
 public class NationalHealthRecordController {
 

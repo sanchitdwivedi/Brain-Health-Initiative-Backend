@@ -2,12 +2,16 @@ package com.healthcare.controller;
 
 import com.healthcare.entity.Level;
 import com.healthcare.service.LevelService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "Brain Health Initiative API")
+@Tag(name = "Level", description = "Endpoint to maintain different levels of hospitals present")
 @RequestMapping("/level")
 public class LevelController {
     @Autowired

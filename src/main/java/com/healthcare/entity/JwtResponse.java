@@ -1,5 +1,8 @@
 package com.healthcare.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(name = "Authentication response")
 public class JwtResponse {
     private User user;
     private String jwtToken;

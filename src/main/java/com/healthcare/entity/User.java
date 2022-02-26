@@ -1,22 +1,32 @@
 package com.healthcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "uuid")
     private Integer uuid;
+    @NotNull
     @Range(min = 100000000000l, max = 999999999999l, message = "User ID must be of 12 digits")
     @Column(name = "user_id", unique = true, nullable = false)
     private Long userId;
+    @NotBlank
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 8, message = "Password must be atleast {min} characters long")
     @Column(name = "password", nullable = false)
     private String password;
+    @JsonIgnore
     @Column(name = "status", nullable = false)
     private Integer status = 0;
     @ManyToOne

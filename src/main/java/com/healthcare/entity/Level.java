@@ -1,13 +1,18 @@
 package com.healthcare.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "level_id")
     private Integer levelId;
+    @NotBlank
     @Column(name = "level_name", nullable = false, unique = true)
     private String levelName;
     @Column(name = "level_description")

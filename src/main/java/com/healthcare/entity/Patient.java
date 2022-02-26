@@ -3,9 +3,12 @@ package com.healthcare.entity;
 import com.healthcare.enumeration.EnumValidator;
 import com.healthcare.enumeration.Gender;
 import com.healthcare.enumeration.Socioeconomic;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -14,63 +17,80 @@ import java.util.Date;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name="uuid")
     private Integer uuid;
 
+    @NotBlank
     @Size(min = 12, max = 12, message = "ABHA ID must be of 12 digits")
     @Column(name="abha_id",unique = true,nullable = false)
     private String abhaId;
 
+    @NotBlank
     @Column(nullable=false,name="first_name")
     private String first_name;
 
+    @NotBlank
     @Column(nullable=false,name="last_name")
     private String last_name;
 
+    @NotNull
     @PastOrPresent
-    @Column(name="dob")
+    @Column(nullable = false, name="dob")
     private Date dob;
 
+    @NotBlank
     @EnumValidator(
             enumClazz = Gender.class,
             message = "Invalid gender value"
     )
+    @Schema(allowableValues = { "MALE", "FEMALE", "OTHER" })
     @Column(name="gender",nullable=false)
     private String gender;
 
+    @NotBlank
     @Column(nullable=false,name="education")
     private String education;
 
+    @NotBlank
     @EnumValidator(
             enumClazz = Socioeconomic.class,
             message = "Invalid socio-economic status"
     )
+    @Schema(allowableValues = { "BELOW_POVERTY_LINE", "ABOVE_POVERTY_LINE" })
     @Column(nullable=false,name="socioeconomic_status")
     private String socioeconomic_status;
 
+    @NotNull
     @Range(min = 1000000000, max = 9999999999l, message = "Mobile no. must be of 10 digits")
     @Column(nullable=false,name="mobile_no")
     private Long mobile_no;
 
+    @NotBlank
     @Column(nullable=false,name="address_line_1")
     private String address_line_1;
 
     @Column(name="address_line_2")
     private String address_line_2;
 
+    @NotBlank
     @Column(nullable=false,name="district")
     private String district;
 
+    @NotBlank
     @Column(nullable=false,name="state")
     private String state;
 
+    @NotNull
     @Range(min = 100000, max = 999999, message = "Pincode must be of 6 digits")
     @Column(nullable=false,name="pin_code")
     private Long pin_code;
 
+    @NotBlank
     @Column(nullable=false,name="information_caregiver_name")
     private String information_caregiver_name;
 
+    @NotBlank
     @Column(nullable=false,name="relationship_with_patient")
     private String relationship_with_patient;
 
@@ -143,7 +163,7 @@ public class Patient {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.gender = gender.toUpperCase();
     }
 
     public String getEducation() {
@@ -159,7 +179,7 @@ public class Patient {
     }
 
     public void setSocioeconomic_status(String socioeconomic_status) {
-        this.socioeconomic_status = socioeconomic_status;
+        this.socioeconomic_status = socioeconomic_status.toUpperCase();
     }
 
     public Long getMobile_no() {
