@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DoctorDao extends CrudRepository<Doctor, Integer> {
-    @Query("SELECT d FROM Doctor d WHERE d.healthId=?1")
+    @Query("SELECT d FROM Doctor d WHERE d.doctor.userId=?1")
     public Doctor findByHealthId(Long id);
 }

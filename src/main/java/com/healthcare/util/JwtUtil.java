@@ -18,7 +18,7 @@ public class JwtUtil {
 
     private static final int TOKEN_VALIDITY = 3600 * 5;
 
-    public String getDoctorIdFromToken(String token) {
+    public String getUserIdFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -32,7 +32,7 @@ public class JwtUtil {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getDoctorIdFromToken(token);
+        final String username = getUserIdFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

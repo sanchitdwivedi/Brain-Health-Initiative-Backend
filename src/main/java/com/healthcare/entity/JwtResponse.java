@@ -1,20 +1,20 @@
 package com.healthcare.entity;
 
 public class JwtResponse {
-    private Doctor doctor;
+    private User user;
     private String jwtToken;
 
-    public JwtResponse(Doctor doctor, String jwtToken) {
-        this.doctor = doctor;
+    public JwtResponse(User user, String jwtToken) {
+        this.user = user;
         this.jwtToken = jwtToken;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public User getUser() {
+        return user;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getJwtToken() {

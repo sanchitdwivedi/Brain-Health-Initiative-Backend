@@ -14,8 +14,8 @@ import java.util.Date;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="patient_id")
-    private Integer patientId;
+    @Column(name="uuid")
+    private Integer uuid;
 
     @Size(min = 12, max = 12, message = "ABHA ID must be of 12 digits")
     @Column(name="abha_id",unique = true,nullable = false)
@@ -79,8 +79,8 @@ public class Patient {
 
     }
 
-    public Patient(Integer patientId, String abhaId, String first_name, String last_name, Date dob, String gender, String education, String socioeconomic_status, Long mobile_no, String address_line_1, String address_line_2, String district, String state, Long pin_code, String information_caregiver_name, String relationship_with_patient) {
-        this.patientId = patientId;
+    public Patient(Integer uuid, String abhaId, String first_name, String last_name, Date dob, String gender, String education, String socioeconomic_status, Long mobile_no, String address_line_1, String address_line_2, String district, String state, Long pin_code, String information_caregiver_name, String relationship_with_patient) {
+        this.uuid = uuid;
         this.abhaId = abhaId;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -98,12 +98,12 @@ public class Patient {
         this.relationship_with_patient = relationship_with_patient;
     }
 
-    public Integer getPatientId() {
-        return patientId;
+    public Integer getUuid() {
+        return uuid;
     }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
+    public void setUuid(Integer uuid) {
+        this.uuid = uuid;
     }
 
     public String getAbhaId() {
@@ -229,7 +229,7 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                "patientId=" + patientId +
+                "patientId=" + uuid +
                 ", abhaId='" + abhaId + '\'' +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +

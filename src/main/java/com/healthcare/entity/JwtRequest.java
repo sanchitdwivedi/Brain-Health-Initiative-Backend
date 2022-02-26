@@ -1,22 +1,22 @@
 package com.healthcare.entity;
 
 public class JwtRequest {
-    private String doctorId;
-    private String doctorPassword;
+    private String userId;
+    private String userPassword;
 
-    public String getDoctorId() {
-        return doctorId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getDoctorPassword() {
-        return doctorPassword;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setDoctorPassword(String doctorPassword) {
-        this.doctorPassword = doctorPassword;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 }

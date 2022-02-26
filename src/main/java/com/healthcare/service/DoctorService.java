@@ -3,17 +3,16 @@ package com.healthcare.service;
 import com.healthcare.dao.DoctorDao;
 import com.healthcare.dao.HospitalDao;
 import com.healthcare.dao.RoleDao;
+import com.healthcare.dao.UserDao;
 import com.healthcare.entity.Doctor;
 import com.healthcare.entity.Hospital;
 import com.healthcare.entity.Role;
-import com.healthcare.enumeration.Gender;
+import com.healthcare.entity.User;
 import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +22,8 @@ public class DoctorService {
     @Autowired
     private DoctorDao doctorDao;
     @Autowired
+    private UserDao userDao;
+    @Autowired
     private RoleDao roleDao;
     @Autowired
     private HospitalDao hospitalDao;
@@ -30,17 +31,21 @@ public class DoctorService {
     private PasswordEncoder passwordEncoder;
 
     public Doctor createDoctor(Doctor doctor){
-        Role role = roleDao.findByRoleName(doctor.getRole().getRoleName());
+        Role role = roleDao.findByRoleName(doctor.getDoctor().getRole().getRoleName());
         Optional<Hospital> hospital = hospitalDao.findById(doctor.getHospital().getHospitalId());
         if(role==null) throw new APIRequestException("Invalid role");
         if(!hospital.isPresent()) throw new APIRequestException("Invalid hospital");
-        doctor.setRole(role);
         doctor.setHospital(hospital.get());
-        doctor.setPassword(getEncodedPassword(doctor.getPassword()));
+        User user = new User();
+        user.setUserId(doctor.getDoctor().getUserId());
+        user.setPassword(getEncodedPassword(doctor.getDoctor().getPassword()));
+        user.setRole(role);
         try {
+            userDao.save(user);
+            doctor.setDoctor(user);
             return doctorDao.save(doctor);
         } catch (Exception e){
-            throw new APIRequestException("A doctor is already registered with Health ID: " + doctor.getHealthId());
+            throw new APIRequestException("A user is already registered with ID: " + doctor.getDoctor().getUserId());
         }
     }
 
@@ -56,9 +61,9 @@ public class DoctorService {
     public Doctor updatePassword(long id, String password){
         if(password==null || password.length()<8) throw new APIRequestException("Password must be atleast 8 characters long");
         Doctor doctor = doctorDao.findByHealthId(id);
-        if(doctor==null || doctor.getStatus()==1) throw new APIRequestException("Cannot change password of doctor with id: " + id);
-        doctor.setPassword(getEncodedPassword(password));
-        doctor.setStatus(1);
+        if(doctor==null || doctor.getDoctor().getStatus()==1) throw new APIRequestException("Cannot change password of doctor with id: " + id);
+        doctor.getDoctor().setPassword(getEncodedPassword(password));
+        doctor.getDoctor().setStatus(1);
         return doctorDao.save(doctor);
     }
 

@@ -6,17 +6,16 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "doctor_id")
-    private Integer doctorId;
-    @Range(min = 100000000000l, max = 999999999999l, message = "Health ID must be of 12 digits")
-    @Column(nullable = false, unique = true, name = "health_id")
-    private Long healthId;
+    @Column(name = "uuid")
+    private Integer uuid;
+    @OneToOne
+    @JoinColumn(name = "doctor", nullable = false)
+    private User doctor;
     @Column(nullable = false, name = "first_name")
     private String firstName;
     @Column(nullable = false, name = "last_name")
@@ -36,32 +35,23 @@ public class Doctor {
     @Email
     @Column(name = "email")
     private String email;
-    @Size(min = 8, message = "Password must be atleast {min} characters long")
-    @Column(name = "password", nullable = false)
-    private String password;
     @EnumValidator(
             enumClazz = Gender.class,
             message = "Invalid gender value"
     )
     @Column(name = "gender")
     private String gender;
-    @Column(name = "status", nullable = false)
-    private Integer status = 0;
 
     @ManyToOne
     @JoinColumn(name="hospital_id", nullable = false)
     private Hospital hospital;
 
-    @ManyToOne
-    @JoinColumn(name="role", nullable = false)
-    private Role role;
-
     public Doctor() {
     }
 
-    public Doctor(Integer doctorId, Long healthId, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String password, String gender, Integer status, Hospital hospital, Role role) {
-        this.doctorId = doctorId;
-        this.healthId = healthId;
+    public Doctor(Integer uuid, User doctor, String firstName, String lastName, String state, String district, String city, Integer pincode, Long mobileNo, String email, String genders, Hospital hospital) {
+        this.uuid = uuid;
+        this.doctor = doctor;
         this.firstName = firstName;
         this.lastName = lastName;
         this.state = state;
@@ -70,27 +60,24 @@ public class Doctor {
         this.pincode = pincode;
         this.mobileNo = mobileNo;
         this.email = email;
-        this.password = password;
         this.gender = gender;
-        this.status = status;
         this.hospital = hospital;
-        this.role = role;
     }
 
-    public Integer getDoctorId() {
-        return doctorId;
+    public Integer getUuid() {
+        return uuid;
     }
 
-    public void setDoctorId(Integer doctorId) {
-        this.doctorId = doctorId;
+    public void setUuid(Integer uuid) {
+        this.uuid = uuid;
     }
 
-    public Long getHealthId() {
-        return healthId;
+    public User getDoctor() {
+        return doctor;
     }
 
-    public void setHealthId(Long healthId) {
-        this.healthId = healthId;
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
     }
 
     public String getFirstName() {
@@ -157,28 +144,12 @@ public class Doctor {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
-        this.gender = gender.toUpperCase();
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
+        this.gender = gender;
     }
 
     public Hospital getHospital() {
@@ -189,19 +160,11 @@ public class Doctor {
         this.hospital = hospital;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     @Override
     public String toString() {
         return "Doctor{" +
-                "doctorId=" + doctorId +
-                ", healthId=" + healthId +
+                "doctorId=" + uuid +
+                ", doctor=" + doctor +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", state='" + state + '\'' +
@@ -210,11 +173,8 @@ public class Doctor {
                 ", pincode=" + pincode +
                 ", mobileNo=" + mobileNo +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", gender=" + gender +
-                ", status=" + status +
+                ", gender='" + gender + '\'' +
                 ", hospital=" + hospital +
-                ", role=" + role +
                 '}';
     }
 }
