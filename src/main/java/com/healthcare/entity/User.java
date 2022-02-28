@@ -1,6 +1,5 @@
 package com.healthcare.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Range;
@@ -26,7 +25,7 @@ public class User {
     @Size(min = 8, message = "Password must be atleast {min} characters long")
     @Column(name = "password", nullable = false)
     private String password;
-    @JsonIgnore
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "status", nullable = false)
     private Integer status = 0;
     @ManyToOne
