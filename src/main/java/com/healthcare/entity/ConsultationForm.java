@@ -89,13 +89,14 @@ public class ConsultationForm {
     @Column(name="follow_up")
     private String followUp;
 
-    @Column(name="refer")
-    private Integer refer;
+    @ManyToOne
+    @JoinColumn(name="refer")
+    private Doctor refer;
 
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, String medicineName, String dosage, String dosingtime, Date duration, Date dateAndTime, String remarks, String treatmentInstructions, String followUp, Integer refer) {
+    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, String medicineName, String dosage, String dosingtime, Date duration, Date dateAndTime, String remarks, String treatmentInstructions, String followUp, Doctor refer) {
         this.formId = formId;
         this.patient = patient;
         this.doctor = doctor;
@@ -270,11 +271,11 @@ public class ConsultationForm {
         this.followUp = followUp;
     }
 
-    public Integer getRefer() {
+    public Doctor getRefer() {
         return refer;
     }
 
-    public void setRefer(Integer refer) {
+    public void setRefer(Doctor refer) {
         this.refer = refer;
     }
 

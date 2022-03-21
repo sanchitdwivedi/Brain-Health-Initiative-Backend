@@ -1,6 +1,8 @@
 package com.healthcare.controller;
 
+import com.healthcare.entity.ConsultationForm;
 import com.healthcare.entity.Doctor;
+import com.healthcare.service.ConsultationFormService;
 import com.healthcare.service.DoctorService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,6 +23,9 @@ import java.util.List;
 public class DoctorController {
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private ConsultationFormService consultationFormService;
 
     @PostMapping("")
     public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody Doctor doctor){
@@ -46,6 +51,15 @@ public class DoctorController {
         return doctorService.getDoctorByHealthId(id);
     }
 
+    @GetMapping("/{id}/referrals")
+    public List<ConsultationForm> getReferrals(@PathVariable long id){
+        return consultationFormService.getConsultationFormByRefer(id);
+    }
+
+    @GetMapping("/{id}/patients")
+    public List<ConsultationForm> getPatients(@PathVariable long id){
+        return consultationFormService.getConsultationFormByDoctor(id);
+    }
 //    @GetMapping("/specialist")
 //    @PreAuthorize("hasRole('specialist')")
 //    public String forSpecialist(){

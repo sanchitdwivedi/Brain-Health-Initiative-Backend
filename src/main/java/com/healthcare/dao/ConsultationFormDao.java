@@ -14,4 +14,10 @@ public interface ConsultationFormDao extends CrudRepository<ConsultationForm, In
 
     @Query("FROM ConsultationForm g where g.patient.abhaId= ?1")
     public List<ConsultationForm> findByAbhaId(String id);
+
+    @Query("FROM ConsultationForm g where g.refer.doctor.userId=?1")
+    public List<ConsultationForm> findByRefer(Long id);
+
+    @Query("FROM ConsultationForm g where g.doctor.doctor.userId=?1")
+    public List<ConsultationForm> findByDoctor(Long id);
 }
