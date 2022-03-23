@@ -3,12 +3,15 @@ package com.healthcare.entity;
 import com.healthcare.enumeration.DiagnosisType;
 import com.healthcare.enumeration.ICDCode;
 import com.healthcare.enumeration.ImprovementType;
+import com.healthcare.util.HashMapConverter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class ConsultationForm {
@@ -60,16 +63,20 @@ public class ConsultationForm {
     @Column(nullable = false, name="improvement_type")
     private ImprovementType improvementtype;
 
-    @Column(name="medicine_name")
-    private String medicineName;
+//    @Column(name="medicine_name")
+//    private String medicineName;
+//
+//    @NotBlank
+//    @Column(nullable = false, name="dosage")
+//    private String dosage;
+//
+//    @NotBlank
+//    @Column(nullable = false, name="dosing_time")
+//    private String dosingtime;
 
-    @NotBlank
-    @Column(nullable = false, name="dosage")
-    private String dosage;
-
-    @NotBlank
-    @Column(nullable = false, name="dosing_time")
-    private String dosingtime;
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    @Convert(converter = HashMapConverter.class)
+    private List<Map<String, String>> medicineInfo;
 
     @NotNull
     @Column(nullable = false, name="duration")
@@ -96,7 +103,7 @@ public class ConsultationForm {
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, String medicineName, String dosage, String dosingtime, Date duration, Date dateAndTime, String remarks, String treatmentInstructions, String followUp, Doctor refer) {
+    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, List<Map<String, String>> medicineInfo, Date duration, Date dateAndTime, String remarks, String treatmentInstructions, String followUp, Doctor refer) {
         this.formId = formId;
         this.patient = patient;
         this.doctor = doctor;
@@ -108,9 +115,7 @@ public class ConsultationForm {
         this.icdDescription = icdDescription;
         this.idc10code = idc10code;
         this.improvementtype = improvementtype;
-        this.medicineName = medicineName;
-        this.dosage = dosage;
-        this.dosingtime = dosingtime;
+        this.medicineInfo = medicineInfo;
         this.duration = duration;
         this.dateAndTime = dateAndTime;
         this.remarks = remarks;
@@ -207,28 +212,12 @@ public class ConsultationForm {
         this.improvementtype = improvementtype;
     }
 
-    public String getMedicineName() {
-        return medicineName;
+    public List<Map<String, String>> getMedicineInfo() {
+        return medicineInfo;
     }
 
-    public void setMedicineName(String medicineName) {
-        this.medicineName = medicineName;
-    }
-
-    public String getDosage() {
-        return dosage;
-    }
-
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
-    }
-
-    public String getDosingtime() {
-        return dosingtime;
-    }
-
-    public void setDosingtime(String dosingtime) {
-        this.dosingtime = dosingtime;
+    public void setMedicineInfo(List<Map<String, String>> medicineInfo) {
+        this.medicineInfo = medicineInfo;
     }
 
     public Date getDuration() {
@@ -293,9 +282,7 @@ public class ConsultationForm {
                 ", icdDescription='" + icdDescription + '\'' +
                 ", idc10code=" + idc10code +
                 ", improvementtype=" + improvementtype +
-                ", medicineName='" + medicineName + '\'' +
-                ", dosage='" + dosage + '\'' +
-                ", dosingtime='" + dosingtime + '\'' +
+                ", medicineInfo=" + medicineInfo +
                 ", duration=" + duration +
                 ", dateAndTime=" + dateAndTime +
                 ", remarks='" + remarks + '\'' +

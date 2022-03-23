@@ -31,4 +31,9 @@ public class RoleController {
     public Role getRole(@PathVariable String roleName){
         return roleService.getRoleByName(roleName);
     }
+
+    @GetMapping("/doctors")
+    public List<Role> getDoctorRoles(){
+        return roleService.getDoctorRoles();
+    }
 }
