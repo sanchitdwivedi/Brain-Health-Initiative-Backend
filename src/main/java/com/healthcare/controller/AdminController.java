@@ -21,15 +21,31 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("")
-    public ResponseEntity<Admin>  createAdmin(@Valid @RequestBody Admin admin)
+    public ResponseEntity<Admin> createAdmin(@Valid @RequestBody Admin admin)
     {
         Admin a = adminService.createAdmin(admin);
         return new ResponseEntity<Admin>(a, HttpStatus.CREATED);
     }
-
+    @GetMapping("/{id}")
+    private Admin getAdmin(@PathVariable("id") String id)
+    {
+        return adminService.getAdminById(id);
+    }
     @GetMapping("")
-    public List<Admin> getAllDoctors(){
+    public List<Admin> getAllAdmins(){
         List<Admin> doctors = adminService.getAllAdmins();
         return doctors;
+    }
+    @DeleteMapping("/{id}")
+    private void deleteAdmin(@PathVariable("id") int id)
+    {
+        adminService.deleteAdmin(id);
+    }
+
+    @PutMapping("")
+    private Admin update(@RequestBody Admin admin)
+    {
+        return adminService.updateAdmin(admin);
+
     }
 }

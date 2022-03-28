@@ -3,7 +3,6 @@ import com.healthcare.dao.AdminDao;
 import com.healthcare.dao.RoleDao;
 import com.healthcare.dao.UserDao;
 import com.healthcare.entity.Admin;
-import com.healthcare.entity.Doctor;
 import com.healthcare.entity.Role;
 import com.healthcare.entity.User;
 import com.healthcare.exception.APIRequestException;
@@ -44,5 +43,17 @@ public class AdminService {
     }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public Admin getAdminById(String id) {
+        return adminDao.findAdminByUserId(id);
+    }
+
+    public void deleteAdmin(long id) {
+        adminDao.deleteAdminByUserId(id);
+    }
+
+    public Admin updateAdmin(Admin admin) {
+        return adminDao.save(admin);
     }
 }
