@@ -1,12 +1,11 @@
 package com.healthcare.entity;
 
-import com.healthcare.enumeration.DiagnosisType;
-import com.healthcare.enumeration.ICDCode;
-import com.healthcare.enumeration.ImprovementType;
+import com.healthcare.enumeration.*;
 import com.healthcare.util.HashMapConverter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -53,10 +52,14 @@ public class ConsultationForm {
     @Column(nullable = false, name="icd_description")
     private String icdDescription;
 
-    @NotNull
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false, name="idc_10code")
-    private ICDCode idc10code;
+    @NotBlank
+    @EnumValidator(
+            enumClazz = ICDCode.class,
+            message = "Invalid ICD Code"
+    )
+    @Schema(allowableValues = { "G40", "I63", "R51", "F03" })
+    @Column(name = "icd10code")
+    private String icd10Code;
 
     @NotNull
     @Enumerated(EnumType.ORDINAL)
@@ -79,10 +82,6 @@ public class ConsultationForm {
     private List<Map<String, String>> medicineInfo;
 
     @NotNull
-    @Column(nullable = false, name="duration")
-    private Date duration;
-
-    @NotNull
     @Column(nullable = false, name="date_and_time")
     private Date dateAndTime;
 
@@ -93,8 +92,9 @@ public class ConsultationForm {
     @Column(nullable = false, name="treatment_instructions")
     private String treatmentInstructions;
 
+    @Future
     @Column(name="follow_up")
-    private String followUp;
+    private Date followUp;
 
     @ManyToOne
     @JoinColumn(name="refer")
@@ -103,7 +103,7 @@ public class ConsultationForm {
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, List<Map<String, String>> medicineInfo, Date duration, Date dateAndTime, String remarks, String treatmentInstructions, String followUp, Doctor refer) {
+    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String icd10Code, ImprovementType improvementtype, List<Map<String, String>> medicineInfo, Date dateAndTime, String remarks, String treatmentInstructions, Date followUp, Doctor refer) {
         this.formId = formId;
         this.patient = patient;
         this.doctor = doctor;
@@ -113,10 +113,9 @@ public class ConsultationForm {
         this.illnessSummary = illnessSummary;
         this.diagnosistype = diagnosistype;
         this.icdDescription = icdDescription;
-        this.idc10code = idc10code;
+        this.icd10Code = icd10Code;
         this.improvementtype = improvementtype;
         this.medicineInfo = medicineInfo;
-        this.duration = duration;
         this.dateAndTime = dateAndTime;
         this.remarks = remarks;
         this.treatmentInstructions = treatmentInstructions;
@@ -196,12 +195,12 @@ public class ConsultationForm {
         this.icdDescription = icdDescription;
     }
 
-    public ICDCode getIdc10code() {
-        return idc10code;
+    public String getIcd10Code() {
+        return icd10Code;
     }
 
-    public void setIdc10code(ICDCode idc10code) {
-        this.idc10code = idc10code;
+    public void setIcd10Code(String icd10Code) {
+        this.icd10Code = icd10Code;
     }
 
     public ImprovementType getImprovementtype() {
@@ -218,14 +217,6 @@ public class ConsultationForm {
 
     public void setMedicineInfo(List<Map<String, String>> medicineInfo) {
         this.medicineInfo = medicineInfo;
-    }
-
-    public Date getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Date duration) {
-        this.duration = duration;
     }
 
     public Date getDateAndTime() {
@@ -252,11 +243,11 @@ public class ConsultationForm {
         this.treatmentInstructions = treatmentInstructions;
     }
 
-    public String getFollowUp() {
+    public Date getFollowUp() {
         return followUp;
     }
 
-    public void setFollowUp(String followUp) {
+    public void setFollowUp(Date followUp) {
         this.followUp = followUp;
     }
 
@@ -280,14 +271,13 @@ public class ConsultationForm {
                 ", illnessSummary='" + illnessSummary + '\'' +
                 ", diagnosistype=" + diagnosistype +
                 ", icdDescription='" + icdDescription + '\'' +
-                ", idc10code=" + idc10code +
+                ", icd10Code='" + icd10Code + '\'' +
                 ", improvementtype=" + improvementtype +
                 ", medicineInfo=" + medicineInfo +
-                ", duration=" + duration +
                 ", dateAndTime=" + dateAndTime +
                 ", remarks='" + remarks + '\'' +
                 ", treatmentInstructions='" + treatmentInstructions + '\'' +
-                ", followUp='" + followUp + '\'' +
+                ", followUp=" + followUp +
                 ", refer=" + refer +
                 '}';
     }

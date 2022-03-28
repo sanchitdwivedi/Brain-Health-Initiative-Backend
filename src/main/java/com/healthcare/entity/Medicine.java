@@ -11,13 +11,15 @@ public class Medicine {
     private String medicineName;
     private String dosage;
     private String dosingTime;
+    private Integer duration;
 
     public Medicine(){}
 
-    public Medicine(String medicineName, String dosage, String dosingTime) {
+    public Medicine(String medicineName, String dosage, String dosingTime, Integer duration) {
         this.medicineName = medicineName;
         this.dosage = dosage;
         this.dosingTime = dosingTime;
+        this.duration = duration;
     }
 
     public String getMedicineName() {
@@ -44,12 +46,21 @@ public class Medicine {
         this.dosingTime = dosingTime;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +
                 "medicineName='" + medicineName + '\'' +
                 ", dosage='" + dosage + '\'' +
                 ", dosingTime='" + dosingTime + '\'' +
+                ", duration=" + duration +
                 '}';
     }
 }
