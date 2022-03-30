@@ -1,5 +1,6 @@
 package com.healthcare.controller;
 
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Doctor;
 import com.healthcare.service.DoctorService;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -44,6 +45,19 @@ public class DoctorController {
     @GetMapping("/{id}")
     public Doctor getDoctor(@PathVariable long id){
         return doctorService.getDoctorByHealthId(id);
+    }
+
+    @DeleteMapping("/{id}")
+    private void deleteDoctor(@PathVariable("id") long id)
+    {
+        doctorService.deleteDoctor(id);
+    }
+
+    @PutMapping("")
+    private Doctor update(@RequestBody Doctor doctor)
+    {
+        return doctorService.updateDoctor(doctor);
+
     }
 
 //    @GetMapping("/specialist")

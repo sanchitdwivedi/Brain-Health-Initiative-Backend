@@ -4,10 +4,7 @@ import com.healthcare.dao.DoctorDao;
 import com.healthcare.dao.HospitalDao;
 import com.healthcare.dao.RoleDao;
 import com.healthcare.dao.UserDao;
-import com.healthcare.entity.Doctor;
-import com.healthcare.entity.Hospital;
-import com.healthcare.entity.Role;
-import com.healthcare.entity.User;
+import com.healthcare.entity.*;
 import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -72,5 +69,14 @@ public class DoctorService {
 
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public void deleteDoctor(long id) {
+        Doctor d=doctorDao.findByHealthId(id);
+        doctorDao.deleteById(d.getUuid());
+    }
+
+    public Doctor updateDoctor(Doctor doctor) {
+        return doctorDao.save(doctor);
     }
 }

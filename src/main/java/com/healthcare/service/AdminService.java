@@ -45,12 +45,13 @@ public class AdminService {
         return passwordEncoder.encode(password);
     }
 
-    public Admin getAdminById(String id) {
+    public Admin getAdminById(Long id) {
         return adminDao.findAdminByUserId(id);
     }
 
     public void deleteAdmin(long id) {
-        adminDao.deleteAdminByUserId(id);
+        Admin ad=adminDao.findAdminByUserId(id);
+        adminDao.deleteById(ad.getUuid());
     }
 
     public Admin updateAdmin(Admin admin) {

@@ -17,7 +17,7 @@ public class Admin {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "uuid")
     private Integer uuid;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "admin", nullable = false)
     private User admin;
 
