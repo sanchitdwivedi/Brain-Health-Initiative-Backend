@@ -1,5 +1,6 @@
 package com.healthcare.controller;
 
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Role;
 import com.healthcare.service.RoleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,4 +32,19 @@ public class RoleController {
     public Role getRole(@PathVariable String roleName){
         return roleService.getRoleByName(roleName);
     }
+
+    @DeleteMapping("/{id}")
+    private void deleteRole(@PathVariable("id") String id)
+    {
+        roleService.deleteRole(id);
+        //System.out.println("Deleted");
+    }
+
+    @PutMapping("")
+    private Role update(@RequestBody Role role)
+    {
+        return roleService.updateRole(role);
+
+    }
+
 }

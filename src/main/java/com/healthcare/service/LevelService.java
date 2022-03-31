@@ -1,6 +1,7 @@
 package com.healthcare.service;
 
 import com.healthcare.dao.LevelDao;
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Level;
 import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,15 @@ public class LevelService {
 
     public Level getLevelByName(String levelName){
         return levelDao.findByLevelName(levelName);
+    }
+
+
+    public void deleteLevel(String id) {
+        Level lvl=levelDao.findByLevelName(id);
+        levelDao.deleteById(lvl.getLevelId());
+    }
+
+    public Level updateLevel(Level level) {
+        return levelDao.save(level);
     }
 }

@@ -1,5 +1,6 @@
 package com.healthcare.controller;
 
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Level;
 import com.healthcare.service.LevelService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,5 +31,19 @@ public class LevelController {
     @GetMapping("/{levelName}")
     public Level getLevel(@PathVariable String levelName){
         return levelService.getLevelByName(levelName);
+    }
+
+    @DeleteMapping("/{id}")
+    private void deleteLevel(@PathVariable("id") String id)
+    {
+        levelService.deleteLevel(id);
+        //System.out.println("Deleted");
+    }
+
+    @PutMapping("")
+    private Level update(@RequestBody Level level)
+    {
+        return levelService.updateLevel(level);
+
     }
 }

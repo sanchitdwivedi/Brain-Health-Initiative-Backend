@@ -1,5 +1,6 @@
 package com.healthcare.controller;
 
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Hospital;
 import com.healthcare.service.HospitalService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -36,4 +37,19 @@ public class HospitalController {
     public Hospital getHospital(@PathVariable int id){
         return hospitalService.getHospitalById(id);
     }
+
+    @DeleteMapping("/{id}")
+    private void deleteHospital(@PathVariable("id") Integer id)
+    {
+        hospitalService.deleteHospital(id);
+       // System.out.println("Deleted");
+    }
+
+    @PutMapping("")
+    private Hospital update(@RequestBody Hospital hospital)
+    {
+        return hospitalService.updateAdmin(hospital);
+
+    }
+
 }

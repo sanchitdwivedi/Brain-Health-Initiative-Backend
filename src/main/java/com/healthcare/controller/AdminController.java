@@ -40,7 +40,7 @@ public class AdminController {
     private void deleteAdmin(@PathVariable("id") long id)
     {
         adminService.deleteAdmin(id);
-        System.out.println("Deleted");
+        //System.out.println("Deleted");
     }
 
     @PutMapping("")
