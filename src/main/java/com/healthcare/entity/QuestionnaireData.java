@@ -1,6 +1,9 @@
 package com.healthcare.entity;
 
+import com.healthcare.util.QuestionnaireRedirectConverter;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class QuestionnaireData {
@@ -22,6 +25,9 @@ public class QuestionnaireData {
     @Column(nullable = false)
     private int isMSQ;
 
+    @Convert(converter = QuestionnaireRedirectConverter.class)
+    private List<Integer> questionnaireOptions;
+
     public Integer getUuid() {
         return uuid;
     }
@@ -32,6 +38,14 @@ public class QuestionnaireData {
 
     public String getQuestion() {
         return question;
+    }
+
+    public List<Integer> getQuestionnaireOptions() {
+        return questionnaireOptions;
+    }
+
+    public void setQuestionnaireOptions(List<Integer> questionnaireOptions) {
+        this.questionnaireOptions = questionnaireOptions;
     }
 
     public void setQuestion(String question) {
@@ -64,12 +78,9 @@ public class QuestionnaireData {
 
     public QuestionnaireData() {}
 
-    public QuestionnaireData(Integer uuid, String question, int isQuestion, int takeCount, int isMSQ) {
+
+    public QuestionnaireData(Integer uuid) {
         this.uuid = uuid;
-        this.question = question;
-        this.isQuestion = isQuestion;
-        this.takeCount = takeCount;
-        this.isMSQ = isMSQ;
     }
 
     @Override
@@ -80,6 +91,7 @@ public class QuestionnaireData {
                 ", isQuestion=" + isQuestion +
                 ", takeCount=" + takeCount +
                 ", isMSQ=" + isMSQ +
+                ", questionnaireOptions=" + questionnaireOptions +
                 '}';
     }
 }
