@@ -2,6 +2,7 @@ package com.healthcare.entity;
 
 import javax.persistence.*;
 
+@Entity
 public class QuestionnaireData {
 
     @Id
@@ -13,13 +14,13 @@ public class QuestionnaireData {
     private String question;
 
     @Column(nullable = false)
-    private boolean isQuestion;
+    private int isQuestion;
 
     @Column(nullable = false)
-    private boolean takeCount;
+    private int takeCount;
 
     @Column(nullable = false)
-    private boolean isMSQ;
+    private int isMSQ;
 
     public Integer getUuid() {
         return uuid;
@@ -37,33 +38,33 @@ public class QuestionnaireData {
         this.question = question;
     }
 
-    public boolean isQuestion() {
+    public int getIsQuestion() {
         return isQuestion;
     }
 
-    public void setQuestion(boolean question) {
-        isQuestion = question;
+    public void setIsQuestion(int isQuestion) {
+        this.isQuestion = isQuestion;
     }
 
-    public boolean isTakeCount() {
+    public int getTakeCount() {
         return takeCount;
     }
 
-    public void setTakeCount(boolean takeCount) {
+    public void setTakeCount(int takeCount) {
         this.takeCount = takeCount;
     }
 
-    public boolean isMSQ() {
+    public int getIsMSQ() {
         return isMSQ;
     }
 
-    public void setMSQ(boolean MSQ) {
-        isMSQ = MSQ;
+    public void setIsMSQ(int isMSQ) {
+        this.isMSQ = isMSQ;
     }
 
     public QuestionnaireData() {}
 
-    public QuestionnaireData(Integer uuid, String question, boolean isQuestion, boolean takeCount, boolean isMSQ) {
+    public QuestionnaireData(Integer uuid, String question, int isQuestion, int takeCount, int isMSQ) {
         this.uuid = uuid;
         this.question = question;
         this.isQuestion = isQuestion;

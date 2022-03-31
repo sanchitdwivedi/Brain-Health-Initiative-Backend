@@ -1,19 +1,13 @@
 package com.healthcare.controller;
 
-import com.healthcare.entity.Doctor;
-import com.healthcare.entity.QuestionResponse;
-import com.healthcare.entity.QuestionnaireData;
+import com.healthcare.entity.*;
 import com.healthcare.service.QuestionnaireService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -31,4 +25,19 @@ public class QuestionnaireController {
         return new ResponseEntity<QuestionnaireData>(q, HttpStatus.OK);
     }
 
+    @PostMapping("/add/question")
+    public ResponseEntity<String> addQuestion(@RequestBody QuestionDetail questionDetail){
+        System.out.println("OK");
+        System.out.println(questionDetail);
+        questionnaireService.addQuestion(questionDetail);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @PostMapping("/add/option")
+    public QuestionnaireOptions addOption(@RequestBody QuestionnaireOptions questionnaireOptions){
+        return questionnaireService.addOption(questionnaireOptions);
+    }
+
+//    @GetMapping("options")
+//    public
 }
