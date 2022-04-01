@@ -21,6 +21,7 @@ public class ConsultationFormController {
 
     @PostMapping("")
     public ConsultationForm createConsultationForm(@RequestBody ConsultationForm consultationForm){
+        System.out.println(consultationForm);
         ConsultationForm c = consultationformservice.createConsultationForm(consultationForm);
         if(c==null) throw new APIRequestException("Invalid");
         return c;
