@@ -1,14 +1,16 @@
 package com.healthcare.entity;
 
-import com.healthcare.enumeration.DiagnosisType;
-import com.healthcare.enumeration.ICDCode;
-import com.healthcare.enumeration.ImprovementType;
+import com.healthcare.enumeration.*;
+import com.healthcare.util.HashMapConverter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class ConsultationForm {
@@ -50,30 +52,34 @@ public class ConsultationForm {
     @Column(nullable = false, name="icd_description")
     private String icdDescription;
 
-    @NotNull
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false, name="idc_10code")
-    private ICDCode idc10code;
+    @NotBlank
+    @EnumValidator(
+            enumClazz = ICDCode.class,
+            message = "Invalid ICD Code"
+    )
+    @Schema(allowableValues = { "G40", "I63", "R51", "F03" })
+    @Column(name = "icd10code")
+    private String icd10Code;
 
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, name="improvement_type")
     private ImprovementType improvementtype;
 
-    @Column(name="medicine_name")
-    private String medicineName;
+//    @Column(name="medicine_name")
+//    private String medicineName;
+//
+//    @NotBlank
+//    @Column(nullable = false, name="dosage")
+//    private String dosage;
+//
+//    @NotBlank
+//    @Column(nullable = false, name="dosing_time")
+//    private String dosingtime;
 
-    @NotBlank
-    @Column(nullable = false, name="dosage")
-    private String dosage;
-
-    @NotBlank
-    @Column(nullable = false, name="dosing_time")
-    private String dosingtime;
-
-    @NotNull
-    @Column(nullable = false, name="duration")
-    private Date duration;
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    @Convert(converter = HashMapConverter.class)
+    private List<Map<String, String>> medicineInfo;
 
     @NotNull
     @Column(nullable = false, name="date_and_time")
@@ -86,8 +92,9 @@ public class ConsultationForm {
     @Column(nullable = false, name="treatment_instructions")
     private String treatmentInstructions;
 
+    @Future
     @Column(name="follow_up")
-    private String followUp;
+    private Date followUp;
 
     @ManyToOne
     @JoinColumn(name="refer")
@@ -96,7 +103,7 @@ public class ConsultationForm {
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, ICDCode idc10code, ImprovementType improvementtype, String medicineName, String dosage, String dosingtime, Date duration, Date dateAndTime, String remarks, String treatmentInstructions, String followUp, Doctor refer) {
+    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String icd10Code, ImprovementType improvementtype, List<Map<String, String>> medicineInfo, Date dateAndTime, String remarks, String treatmentInstructions, Date followUp, Doctor refer) {
         this.formId = formId;
         this.patient = patient;
         this.doctor = doctor;
@@ -106,12 +113,9 @@ public class ConsultationForm {
         this.illnessSummary = illnessSummary;
         this.diagnosistype = diagnosistype;
         this.icdDescription = icdDescription;
-        this.idc10code = idc10code;
+        this.icd10Code = icd10Code;
         this.improvementtype = improvementtype;
-        this.medicineName = medicineName;
-        this.dosage = dosage;
-        this.dosingtime = dosingtime;
-        this.duration = duration;
+        this.medicineInfo = medicineInfo;
         this.dateAndTime = dateAndTime;
         this.remarks = remarks;
         this.treatmentInstructions = treatmentInstructions;
@@ -191,12 +195,12 @@ public class ConsultationForm {
         this.icdDescription = icdDescription;
     }
 
-    public ICDCode getIdc10code() {
-        return idc10code;
+    public String getIcd10Code() {
+        return icd10Code;
     }
 
-    public void setIdc10code(ICDCode idc10code) {
-        this.idc10code = idc10code;
+    public void setIcd10Code(String icd10Code) {
+        this.icd10Code = icd10Code;
     }
 
     public ImprovementType getImprovementtype() {
@@ -207,36 +211,12 @@ public class ConsultationForm {
         this.improvementtype = improvementtype;
     }
 
-    public String getMedicineName() {
-        return medicineName;
+    public List<Map<String, String>> getMedicineInfo() {
+        return medicineInfo;
     }
 
-    public void setMedicineName(String medicineName) {
-        this.medicineName = medicineName;
-    }
-
-    public String getDosage() {
-        return dosage;
-    }
-
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
-    }
-
-    public String getDosingtime() {
-        return dosingtime;
-    }
-
-    public void setDosingtime(String dosingtime) {
-        this.dosingtime = dosingtime;
-    }
-
-    public Date getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Date duration) {
-        this.duration = duration;
+    public void setMedicineInfo(List<Map<String, String>> medicineInfo) {
+        this.medicineInfo = medicineInfo;
     }
 
     public Date getDateAndTime() {
@@ -263,11 +243,11 @@ public class ConsultationForm {
         this.treatmentInstructions = treatmentInstructions;
     }
 
-    public String getFollowUp() {
+    public Date getFollowUp() {
         return followUp;
     }
 
-    public void setFollowUp(String followUp) {
+    public void setFollowUp(Date followUp) {
         this.followUp = followUp;
     }
 
@@ -291,16 +271,13 @@ public class ConsultationForm {
                 ", illnessSummary='" + illnessSummary + '\'' +
                 ", diagnosistype=" + diagnosistype +
                 ", icdDescription='" + icdDescription + '\'' +
-                ", idc10code=" + idc10code +
+                ", icd10Code='" + icd10Code + '\'' +
                 ", improvementtype=" + improvementtype +
-                ", medicineName='" + medicineName + '\'' +
-                ", dosage='" + dosage + '\'' +
-                ", dosingtime='" + dosingtime + '\'' +
-                ", duration=" + duration +
+                ", medicineInfo=" + medicineInfo +
                 ", dateAndTime=" + dateAndTime +
                 ", remarks='" + remarks + '\'' +
                 ", treatmentInstructions='" + treatmentInstructions + '\'' +
-                ", followUp='" + followUp + '\'' +
+                ", followUp=" + followUp +
                 ", refer=" + refer +
                 '}';
     }

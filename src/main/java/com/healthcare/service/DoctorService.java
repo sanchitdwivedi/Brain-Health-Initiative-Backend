@@ -73,4 +73,8 @@ public class DoctorService {
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
     }
+
+    public List<Doctor> getDoctorsByRoleId(Integer id){
+        return doctorDao.findByRoleId(id);
+    }
 }

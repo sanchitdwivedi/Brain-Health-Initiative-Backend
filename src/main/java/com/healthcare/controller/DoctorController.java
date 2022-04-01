@@ -60,6 +60,11 @@ public class DoctorController {
     public List<ConsultationForm> getPatients(@PathVariable long id){
         return consultationFormService.getConsultationFormByDoctor(id);
     }
+
+    @GetMapping("/role/{id}")
+    public List<Doctor> getDoctorsByRoleId(@PathVariable Integer id){
+        return doctorService.getDoctorsByRoleId(id);
+    }
 //    @GetMapping("/specialist")
 //    @PreAuthorize("hasRole('specialist')")
 //    public String forSpecialist(){

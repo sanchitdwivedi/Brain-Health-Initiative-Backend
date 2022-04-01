@@ -48,6 +48,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
                                                                     HttpStatus status, WebRequest request) {
+        System.out.println(ex);
         APIException apiException = new APIException(
                 "Invalid request body",
                 HttpStatus.BAD_REQUEST,
