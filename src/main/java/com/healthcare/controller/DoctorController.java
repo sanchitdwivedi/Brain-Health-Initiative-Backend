@@ -29,6 +29,7 @@ public class DoctorController {
 
     @PostMapping("")
     public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody Doctor doctor){
+        System.out.println(doctor);
         Doctor d = doctorService.createDoctor(doctor);
         return new ResponseEntity<Doctor>(d, HttpStatus.CREATED);
     }
