@@ -26,5 +26,10 @@ public class QuestionnaireFlowWithCount extends QuestionnaireFlow {
         this.questionnaireAnswers = questionnaireAnswers;
     }
 
-
+    @Override
+    public String toString() {
+        return "QuestionnaireFlowWithCount{" +
+                "questionnaireAnswers=" + questionnaireAnswers +
+                '}';
+    }
 }

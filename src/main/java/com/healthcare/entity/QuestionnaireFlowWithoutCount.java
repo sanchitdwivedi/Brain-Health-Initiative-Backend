@@ -32,4 +32,11 @@ public class QuestionnaireFlowWithoutCount extends QuestionnaireFlow{
     public void setQuestionnaireAnswers(List<Integer> questionnaireAnswers) {
         this.questionnaireAnswers = questionnaireAnswers;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionnaireFlowWithoutCount{" +
+                "questionnaireAnswers=" + questionnaireAnswers +
+                '}';
+    }
 }

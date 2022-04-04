@@ -1,6 +1,7 @@
 package com.healthcare.controller;
 
 import com.healthcare.entity.*;
+import com.healthcare.exception.APIRequestException;
 import com.healthcare.service.QuestionnaireService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @SecurityRequirement(name = "Brain Health Initiative API")
@@ -18,6 +21,12 @@ import java.util.HashMap;
 public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
+
+    @GetMapping("/first")
+    public ResponseEntity<QuestionnaireData> getFirstQuestion(){
+        QuestionnaireData questionnaireData = questionnaireService.getFirstQuestion();
+        return new ResponseEntity<>(questionnaireData, HttpStatus.OK);
+    }
 
     @PostMapping("")
     public ResponseEntity<QuestionnaireData> getNextQuestion(@RequestBody QuestionResponse questionResponse){
@@ -38,6 +47,14 @@ public class QuestionnaireController {
         return questionnaireService.addOption(questionnaireOptions);
     }
 
-//    @GetMapping("options")
-//    public
+    @GetMapping("/option/{id}")
+    public QuestionnaireOptions getOption(@PathVariable Integer id){
+        return questionnaireService.getOption(id);
+    }
+
+    @PostMapping("/options")
+    public List<QuestionnaireOptions> getOptionsList(@RequestBody Map<String, List<Integer>> optionIds){
+        if(!optionIds.containsKey("ids")) throw new APIRequestException("Invalid request body");
+        return questionnaireService.getOptionsList(optionIds.get("ids"));
+    }
 }

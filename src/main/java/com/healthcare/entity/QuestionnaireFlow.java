@@ -63,4 +63,14 @@ public abstract class QuestionnaireFlow {
     public void setNextQuestion(QuestionnaireData nextQuestion) {
         this.nextQuestion = nextQuestion;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionnaireFlow{" +
+                "uuid=" + uuid +
+                ", questionNumber=" + questionNumber +
+                ", questionnaireOptions=" + questionnaireOptions +
+                ", nextQuestion=" + nextQuestion +
+                '}';
+    }
 }
