@@ -2,6 +2,7 @@ package com.healthcare.service;
 
 import com.healthcare.dao.HospitalDao;
 import com.healthcare.dao.LevelDao;
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Hospital;
 import com.healthcare.entity.Level;
 import com.healthcare.exception.APIRequestException;
@@ -35,5 +36,14 @@ public class HospitalService {
 
     public Hospital getHospitalById(int id){
         return hospitalDao.findById(id).get();
+    }
+
+    public void deleteHospital(Integer id) {
+        hospitalDao.deleteById(id);
+
+    }
+
+    public Hospital updateAdmin(Hospital hospital) {
+        return hospitalDao.save(hospital);
     }
 }

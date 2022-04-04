@@ -1,6 +1,7 @@
 package com.healthcare.service;
 
 import com.healthcare.dao.RoleDao;
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Role;
 import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,13 @@ public class RoleService {
         return roleDao.findByRoleName(roleName);
     }
 
+    public void deleteRole(String id) {
+        Role role=roleDao.findByRoleName(id);
+        roleDao.deleteById(role.getRoleId());
+    }
+
+    public Role updateRole(Role role) {
+        return roleDao.save(role);
     public List<Role> getDoctorRoles(){
         List<Role> r = (List<Role>) roleDao.findAll();
         List<Role> doctorRoles = new ArrayList<>();

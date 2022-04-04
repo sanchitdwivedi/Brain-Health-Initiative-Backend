@@ -1,5 +1,6 @@
 package com.healthcare.dao;
 
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.Doctor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

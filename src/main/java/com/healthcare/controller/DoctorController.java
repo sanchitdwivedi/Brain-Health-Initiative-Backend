@@ -1,5 +1,6 @@
 package com.healthcare.controller;
 
+import com.healthcare.entity.Admin;
 import com.healthcare.entity.ConsultationForm;
 import com.healthcare.entity.Doctor;
 import com.healthcare.service.ConsultationFormService;
@@ -51,7 +52,18 @@ public class DoctorController {
     public Doctor getDoctor(@PathVariable long id){
         return doctorService.getDoctorByHealthId(id);
     }
+    @DeleteMapping("/{id}")
+    private void deleteDoctor(@PathVariable("id") long id)
+    {
+        doctorService.deleteDoctor(id);
+    }
 
+    @PutMapping("")
+    private Doctor update(@RequestBody Doctor doctor)
+    {
+        return doctorService.updateDoctor(doctor);
+
+    }
     @GetMapping("/{id}/referrals")
     public List<ConsultationForm> getReferrals(@PathVariable long id){
         return consultationFormService.getConsultationFormByRefer(id);
