@@ -7,6 +7,7 @@ import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,5 +39,12 @@ public class RoleService {
 
     public Role updateRole(Role role) {
         return roleDao.save(role);
+    public List<Role> getDoctorRoles(){
+        List<Role> r = (List<Role>) roleDao.findAll();
+        List<Role> doctorRoles = new ArrayList<>();
+        for(Role role: r){
+            if(role.getRoleName()!="program manager" && role.getRoleName()!="admin") doctorRoles.add(role);
+        }
+        return doctorRoles;
     }
 }

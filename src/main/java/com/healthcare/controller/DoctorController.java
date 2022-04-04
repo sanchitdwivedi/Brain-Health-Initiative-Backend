@@ -1,7 +1,9 @@
 package com.healthcare.controller;
 
 import com.healthcare.entity.Admin;
+import com.healthcare.entity.ConsultationForm;
 import com.healthcare.entity.Doctor;
+import com.healthcare.service.ConsultationFormService;
 import com.healthcare.service.DoctorService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,8 +25,12 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
+    @Autowired
+    private ConsultationFormService consultationFormService;
+
     @PostMapping("")
     public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody Doctor doctor){
+        System.out.println(doctor);
         Doctor d = doctorService.createDoctor(doctor);
         return new ResponseEntity<Doctor>(d, HttpStatus.CREATED);
     }
@@ -46,7 +52,6 @@ public class DoctorController {
     public Doctor getDoctor(@PathVariable long id){
         return doctorService.getDoctorByHealthId(id);
     }
-
     @DeleteMapping("/{id}")
     private void deleteDoctor(@PathVariable("id") long id)
     {
@@ -59,7 +64,20 @@ public class DoctorController {
         return doctorService.updateDoctor(doctor);
 
     }
+    @GetMapping("/{id}/referrals")
+    public List<ConsultationForm> getReferrals(@PathVariable long id){
+        return consultationFormService.getConsultationFormByRefer(id);
+    }
 
+    @GetMapping("/{id}/patients")
+    public List<ConsultationForm> getPatients(@PathVariable long id){
+        return consultationFormService.getConsultationFormByDoctor(id);
+    }
+
+    @GetMapping("/role/{id}")
+    public List<Doctor> getDoctorsByRoleId(@PathVariable Integer id){
+        return doctorService.getDoctorsByRoleId(id);
+    }
 //    @GetMapping("/specialist")
 //    @PreAuthorize("hasRole('specialist')")
 //    public String forSpecialist(){

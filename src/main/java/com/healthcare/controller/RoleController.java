@@ -46,5 +46,8 @@ public class RoleController {
         return roleService.updateRole(role);
 
     }
-
+    @GetMapping("/doctors")
+    public List<Role> getDoctorRoles(){
+        return roleService.getDoctorRoles();
+    }
 }
