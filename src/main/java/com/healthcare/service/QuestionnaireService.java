@@ -25,10 +25,12 @@ public class QuestionnaireService {
     @Autowired
     private QuestionnaireOptionsDao questionnaireOptionsDao;
 
+    public QuestionnaireData getFirstQuestion(){
+        return questionnaireDataDao.findById(2).get();
+    }
+
     public QuestionnaireData getNextQuestion(QuestionResponse questionResponse){
-        System.out.println("Hii");
         Optional<QuestionnaireData> questionnaireData = questionnaireDataDao.findById(questionResponse.getQuestionId());
-        System.out.println(questionnaireData);
         if(!questionnaireData.isPresent()){
             throw new APIRequestException("No Question with id: "+questionResponse.getQuestionId()+" found!");
         }
@@ -40,7 +42,10 @@ public class QuestionnaireService {
                     return qf.getNextQuestion();
                 }
             }
-            return questionnaireDataDao.findById(0).get();
+            for(QuestionnaireFlowWithCount qf: list){
+                if(qf.getQuestionnaireAnswers()==-1) return qf.getNextQuestion();
+            }
+            return questionnaireDataDao.findById(1).get();
         }else {
             List<QuestionnaireFlowWithoutCount> list = questionnaireFlowWithoutCountDao.getNextQuestion(questionnaireData.get().getUuid());
             if (list.size() != 0) {
@@ -68,7 +73,7 @@ public class QuestionnaireService {
                 }
             }
         }
-        return questionnaireDataDao.findById(0).get();
+        return questionnaireDataDao.findById(1).get();
     }
 
 
@@ -119,5 +124,19 @@ public class QuestionnaireService {
 
     public QuestionnaireOptions addOption(QuestionnaireOptions questionnaireOptions){
         return questionnaireOptionsDao.save(questionnaireOptions);
+    }
+
+    public QuestionnaireOptions getOption(Integer id){
+        Optional<QuestionnaireOptions> questionnaireOptions = this.questionnaireOptionsDao.findById(id);
+        if(!questionnaireOptions.isPresent()) throw new APIRequestException("Invalid option");
+        return questionnaireOptions.get();
+    }
+
+    public List<QuestionnaireOptions> getOptionsList(List<Integer> optionIds){
+        List<QuestionnaireOptions> options = new ArrayList<>();
+        for(Integer id: optionIds){
+            options.add(getOption(id));
+        }
+        return options;
     }
 }
