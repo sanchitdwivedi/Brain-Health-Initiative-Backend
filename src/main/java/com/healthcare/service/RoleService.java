@@ -39,6 +39,7 @@ public class RoleService {
 
     public Role updateRole(Role role) {
         return roleDao.save(role);
+    }
     public List<Role> getDoctorRoles(){
         List<Role> r = (List<Role>) roleDao.findAll();
         List<Role> doctorRoles = new ArrayList<>();

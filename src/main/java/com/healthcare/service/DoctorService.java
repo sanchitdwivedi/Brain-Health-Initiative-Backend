@@ -78,6 +78,7 @@ public class DoctorService {
 
     public Doctor updateDoctor(Doctor doctor) {
         return doctorDao.save(doctor);
+    }
     public List<Doctor> getDoctorsByRoleId(Integer id){
         return doctorDao.findByRoleId(id);
     }
