@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -100,10 +101,14 @@ public class ConsultationForm {
     @JoinColumn(name="refer")
     private Doctor refer;
 
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    @Convert(converter = HashMapConverter.class)
+    private List<Map<String, Object>> questionnaireResponse = new ArrayList<>();
+
     public ConsultationForm() {
     }
 
-    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String icd10Code, ImprovementType improvementtype, List<Map<String, String>> medicineInfo, Date dateAndTime, String remarks, String treatmentInstructions, Date followUp, Doctor refer) {
+    public ConsultationForm(Integer formId, Patient patient, Doctor doctor, Hospital hospital, String compliant, String examination, String illnessSummary, DiagnosisType diagnosistype, String icdDescription, String icd10Code, ImprovementType improvementtype, List<Map<String, String>> medicineInfo, Date dateAndTime, String remarks, String treatmentInstructions, Date followUp, Doctor refer, List<Map<String, Object>> questionnaireResponse) {
         this.formId = formId;
         this.patient = patient;
         this.doctor = doctor;
@@ -121,6 +126,7 @@ public class ConsultationForm {
         this.treatmentInstructions = treatmentInstructions;
         this.followUp = followUp;
         this.refer = refer;
+        this.questionnaireResponse = questionnaireResponse;
     }
 
     public Integer getFormId() {
@@ -259,6 +265,14 @@ public class ConsultationForm {
         this.refer = refer;
     }
 
+    public List<Map<String, Object>> getQuestionnaireResponse() {
+        return questionnaireResponse;
+    }
+
+    public void setQuestionnaireResponse(List<Map<String, Object>> questionnaireResponse) {
+        this.questionnaireResponse = questionnaireResponse;
+    }
+
     @Override
     public String toString() {
         return "ConsultationForm{" +
@@ -279,6 +293,7 @@ public class ConsultationForm {
                 ", treatmentInstructions='" + treatmentInstructions + '\'' +
                 ", followUp=" + followUp +
                 ", refer=" + refer +
+                ", questionnaireResponse=" + questionnaireResponse +
                 '}';
     }
 }

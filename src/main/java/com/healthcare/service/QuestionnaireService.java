@@ -139,4 +139,8 @@ public class QuestionnaireService {
         }
         return options;
     }
+
+    public QuestionnaireData getQuestionById(Integer id){
+        return questionnaireDataDao.findById(id).get();
+    }
 }

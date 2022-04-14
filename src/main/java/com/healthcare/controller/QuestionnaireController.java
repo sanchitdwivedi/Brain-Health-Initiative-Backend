@@ -57,4 +57,9 @@ public class QuestionnaireController {
         if(!optionIds.containsKey("ids")) throw new APIRequestException("Invalid request body");
         return questionnaireService.getOptionsList(optionIds.get("ids"));
     }
+
+    @GetMapping("/question/{id}")
+    public QuestionnaireData getQuestionById(@PathVariable int id){
+        return questionnaireService.getQuestionById(id);
+    }
 }
