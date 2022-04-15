@@ -32,9 +32,8 @@ public class LevelService {
     }
 
 
-    public void deleteLevel(String id) {
-        Level lvl=levelDao.findByLevelName(id);
-        levelDao.deleteById(lvl.getLevelId());
+    public void deleteLevel(int id) {
+        levelDao.deleteById(id);
     }
 
     public Level updateLevel(Level level) {

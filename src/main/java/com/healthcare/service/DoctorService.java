@@ -71,9 +71,9 @@ public class DoctorService {
         return passwordEncoder.encode(password);
     }
 
-    public void deleteDoctor(long id) {
-        Doctor d=doctorDao.findByHealthId(id);
-        doctorDao.deleteById(d.getUuid());
+    public void deleteDoctor(Integer id) {
+        //Doctor d=doctorDao.findByHealthId(id);
+        doctorDao.deleteById(id);
     }
 
     public Doctor updateDoctor(Doctor doctor) {

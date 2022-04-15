@@ -34,7 +34,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    private void deleteRole(@PathVariable("id") String id)
+    private void deleteRole(@PathVariable("id") int id)
     {
         roleService.deleteRole(id);
         //System.out.println("Deleted");

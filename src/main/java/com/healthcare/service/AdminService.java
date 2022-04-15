@@ -49,9 +49,9 @@ public class AdminService {
         return adminDao.findAdminByUserId(id);
     }
 
-    public void deleteAdmin(long id) {
-        Admin ad=adminDao.findAdminByUserId(id);
-        adminDao.deleteById(ad.getUuid());
+    public void deleteAdmin(int id) {
+        //Admin ad=adminDao.findAdminByUserId(id);
+        adminDao.deleteById(id);
     }
 
     public Admin updateAdmin(Admin admin) {

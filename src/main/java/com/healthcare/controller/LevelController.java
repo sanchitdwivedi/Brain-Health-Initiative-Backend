@@ -34,7 +34,7 @@ public class LevelController {
     }
 
     @DeleteMapping("/{id}")
-    private void deleteLevel(@PathVariable("id") String id)
+    private void deleteLevel(@PathVariable("id") int id)
     {
         levelService.deleteLevel(id);
         //System.out.println("Deleted");

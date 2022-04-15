@@ -32,14 +32,14 @@ public class RoleService {
         return roleDao.findByRoleName(roleName);
     }
 
-    public void deleteRole(String id) {
-        Role role=roleDao.findByRoleName(id);
-        roleDao.deleteById(role.getRoleId());
+    public void deleteRole(int id) {
+        //Role role=roleDao.findByRoleName(id);
+        roleDao.deleteById(id);
     }
 
-    public Role updateRole(Role role) {
-        return roleDao.save(role);
-    }
+    public Role updateRole(Role role)
+    { return roleDao.save(role);}
+
     public List<Role> getDoctorRoles(){
         List<Role> r = (List<Role>) roleDao.findAll();
         List<Role> doctorRoles = new ArrayList<>();

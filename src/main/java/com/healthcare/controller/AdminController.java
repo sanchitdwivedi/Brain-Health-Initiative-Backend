@@ -37,7 +37,7 @@ public class AdminController {
         return doctors;
     }
     @DeleteMapping("/{id}")
-    private void deleteAdmin(@PathVariable("id") long id)
+    private void deleteAdmin(@PathVariable("id") int id)
     {
         adminService.deleteAdmin(id);
         //System.out.println("Deleted");
