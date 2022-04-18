@@ -28,7 +28,8 @@ public class User {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "status", nullable = false)
     private Integer status = 0;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="role", nullable = false)
     private Role role;
 

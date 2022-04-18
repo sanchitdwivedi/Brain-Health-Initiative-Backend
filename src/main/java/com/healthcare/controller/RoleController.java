@@ -40,9 +40,10 @@ public class RoleController {
         //System.out.println("Deleted");
     }
 
-    @PutMapping("")
-    private Role update(@RequestBody Role role)
+    @PutMapping("/{id}")
+    private Role update(@RequestBody Role role,@PathVariable int id)
     {
+        role.setRoleId(id);
         return roleService.updateRole(role);
 
     }

@@ -17,7 +17,7 @@ public class Doctor {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "uuid")
     private Integer uuid;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "doctor", nullable = false)
     private User doctor;
     @NotBlank

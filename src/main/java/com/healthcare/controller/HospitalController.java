@@ -45,9 +45,10 @@ public class HospitalController {
        // System.out.println("Deleted");
     }
 
-    @PutMapping("")
-    private Hospital update(@RequestBody Hospital hospital)
+    @PutMapping("/{id}")
+    private Hospital update(@RequestBody Hospital hospital,@PathVariable int id)
     {
+        hospital.setHospitalId(id);
         return hospitalService.updateAdmin(hospital);
 
     }
