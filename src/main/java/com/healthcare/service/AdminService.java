@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -50,8 +51,10 @@ public class AdminService {
     }
 
     public void deleteAdmin(int id) {
-        //Admin ad=adminDao.findAdminByUserId(id);
-        adminDao.deleteById(id);
+        Optional<Admin> ad=adminDao.findById(id);
+        if(!ad.isPresent()) throw new APIRequestException("Invalid User");
+        User user = userDao.findByUserId(ad.get().getAdmin().getUserId());
+        userDao.deleteById(user.getUuid());
     }
 
     public Admin updateAdmin(Admin admin) {

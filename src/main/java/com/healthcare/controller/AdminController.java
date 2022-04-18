@@ -43,9 +43,10 @@ public class AdminController {
         //System.out.println("Deleted");
     }
 
-    @PutMapping("")
-    private Admin update(@RequestBody Admin admin)
+    @PutMapping("/{id}")
+    private Admin update(@RequestBody Admin admin,@PathVariable int id)
     {
+        admin.setUuid(id);
         return adminService.updateAdmin(admin);
 
     }

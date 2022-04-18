@@ -58,9 +58,10 @@ public class DoctorController {
         doctorService.deleteDoctor(id);
     }
 
-    @PutMapping("")
-    private Doctor update(@RequestBody Doctor doctor)
+    @PutMapping("/update/{id}")
+    private Doctor update(@RequestBody Doctor doctor,@PathVariable int id)
     {
+        doctor.setUuid(id);
         return doctorService.updateDoctor(doctor);
 
     }
