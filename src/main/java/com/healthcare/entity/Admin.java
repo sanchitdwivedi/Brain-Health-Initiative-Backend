@@ -1,5 +1,6 @@
 package com.healthcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.healthcare.enumeration.EnumValidator;
 import com.healthcare.enumeration.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,6 +18,7 @@ public class Admin {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "uuid")
     private Integer uuid;
+
     @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "admin", nullable = false)
     private User admin;

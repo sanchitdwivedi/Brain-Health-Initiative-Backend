@@ -1,7 +1,9 @@
 package com.healthcare.controller;
 
 import com.healthcare.entity.Admin;
+import com.healthcare.entity.Doctor;
 import com.healthcare.service.AdminService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -19,6 +22,13 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Admin> updatePassword(@PathVariable long id, @Schema(description = "Password must be atleast 8 characters long",
+            example = "{\"newPassword\":\"string\"}") @RequestBody HashMap<String, String> object){
+        Admin admin = adminService.updatePassword(id, object);
+        return new ResponseEntity<Admin>(admin, HttpStatus.CREATED);
+    }
 
     @PostMapping("")
     public ResponseEntity<Admin> createAdmin(@Valid @RequestBody Admin admin)
@@ -43,7 +53,7 @@ public class AdminController {
         //System.out.println("Deleted");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     private Admin update(@RequestBody Admin admin,@PathVariable int id)
     {
         admin.setUuid(id);
