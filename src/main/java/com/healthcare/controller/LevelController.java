@@ -40,9 +40,10 @@ public class LevelController {
         //System.out.println("Deleted");
     }
 
-    @PutMapping("")
-    private Level update(@RequestBody Level level)
+    @PutMapping("/{id}")
+    private Level update(@RequestBody Level level,@PathVariable int id)
     {
+        level.setLevelId(id);
         return levelService.updateLevel(level);
 
     }
