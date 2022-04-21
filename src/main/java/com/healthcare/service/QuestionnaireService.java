@@ -50,25 +50,35 @@ public class QuestionnaireService {
             List<QuestionnaireFlowWithoutCount> list = questionnaireFlowWithoutCountDao.getNextQuestion(questionnaireData.get().getUuid());
             if (list.size() != 0) {
                 for (QuestionnaireFlowWithoutCount qf : list) {
-                    boolean isMatched = true;
-                    if (qf.getQuestionnaireAnswers().size() != questionResponse.getOptions().size())
-                        continue;
-                    for (Integer answer : qf.getQuestionnaireAnswers()) {
-                        boolean isFound = false;
-                        for (Integer response : questionResponse.getOptions()) {
-                            if (response == answer) {
-                                isFound = true;
+                    if(qf.isTakeAnyCombination()==1){
+                        for (Integer answer : qf.getQuestionnaireAnswers()) {
+                            for (Integer response : questionResponse.getOptions()) {
+                                if (response == answer) {
+                                    return qf.getNextQuestion();
+                                }
+                            }
+                        }
+                    }else{
+                        boolean isMatched = true;
+                        if (qf.getQuestionnaireAnswers().size() != questionResponse.getOptions().size())
+                            continue;
+                        for (Integer answer : qf.getQuestionnaireAnswers()) {
+                            boolean isFound = false;
+                            for (Integer response : questionResponse.getOptions()) {
+                                if (response == answer) {
+                                    isFound = true;
+                                    break;
+                                }
+                            }
+                            if (!isFound) {
+                                isMatched = false;
                                 break;
                             }
                         }
-                        if (!isFound) {
-                            isMatched = false;
-                            break;
+                        if (isMatched) {
+                            //Redirect Question Found
+                            return qf.getNextQuestion();
                         }
-                    }
-                    if (isMatched) {
-                        //Redirect Question Found
-                        return qf.getNextQuestion();
                     }
                 }
             }
