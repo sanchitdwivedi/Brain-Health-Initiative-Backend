@@ -39,6 +39,10 @@ public class ConsultationFormController {
         return consultationformservice.getConsultationFormByAbhaId(id);
     }
 
+    @GetMapping("/questionnaire/count")
+    public List<ConsultationForm> getQuestionnaireCount(){
+        return consultationformservice.getFormsWithQuestionnaire();
+    }
 
 
 
