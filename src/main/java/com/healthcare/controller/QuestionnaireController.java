@@ -3,6 +3,7 @@ package com.healthcare.controller;
 import com.healthcare.entity.*;
 import com.healthcare.exception.APIRequestException;
 import com.healthcare.service.QuestionnaireService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,6 @@ public class QuestionnaireController {
 
     @PostMapping("/add/question")
     public ResponseEntity<String> addQuestion(@RequestBody QuestionDetail questionDetail){
-        System.out.println("OK");
-        System.out.println(questionDetail);
         questionnaireService.addQuestion(questionDetail);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
@@ -53,7 +52,7 @@ public class QuestionnaireController {
     }
 
     @PostMapping("/options")
-    public List<QuestionnaireOptions> getOptionsList(@RequestBody Map<String, List<Integer>> optionIds){
+    public List<QuestionnaireOptions> getOptionsList(@Schema(example = "{\"ids\":\"[int32]\"}") @RequestBody Map<String, List<Integer>> optionIds){
         if(!optionIds.containsKey("ids")) throw new APIRequestException("Invalid request body");
         return questionnaireService.getOptionsList(optionIds.get("ids"));
     }
@@ -64,7 +63,7 @@ public class QuestionnaireController {
     }
 
     @PostMapping("/questions")
-    public List<QuestionnaireData> getQuestionsList(@RequestBody Map<String, List<Integer>> questionIds){
+    public List<QuestionnaireData> getQuestionsList(@Schema(example = "{\"ids\":\"[int32]\"}") @RequestBody Map<String, List<Integer>> questionIds){
         if(!questionIds.containsKey("ids")) throw new APIRequestException("Invalid request body");
         return questionnaireService.getQuestionDataList(questionIds.get("ids"));
     }
