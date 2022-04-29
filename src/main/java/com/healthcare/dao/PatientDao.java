@@ -13,4 +13,7 @@ public interface PatientDao extends CrudRepository<Patient,Integer> {
     @Query("SELECT p FROM Patient p WHERE p.mobile_no=?1")
     public List<Patient> findByMobileNo(Long id);
 
+    @Query("SELECT p FROM Patient p WHERE ((CONCAT(p.first_name, ' ', p.last_name)=?1) and p.mobile_no=?2)")
+    public Patient findByMobileAndName(String name, Long mobile);
+
 }

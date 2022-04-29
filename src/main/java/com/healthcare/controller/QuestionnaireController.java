@@ -62,4 +62,10 @@ public class QuestionnaireController {
     public QuestionnaireData getQuestionById(@PathVariable int id){
         return questionnaireService.getQuestionById(id);
     }
+
+    @PostMapping("/questions")
+    public List<QuestionnaireData> getQuestionsList(@RequestBody Map<String, List<Integer>> questionIds){
+        if(!questionIds.containsKey("ids")) throw new APIRequestException("Invalid request body");
+        return questionnaireService.getQuestionDataList(questionIds.get("ids"));
+    }
 }

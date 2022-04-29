@@ -153,4 +153,12 @@ public class QuestionnaireService {
     public QuestionnaireData getQuestionById(Integer id){
         return questionnaireDataDao.findById(id).get();
     }
+
+    public List<QuestionnaireData> getQuestionDataList(List<Integer> questionIds){
+        List<QuestionnaireData> questions = new ArrayList<>();
+        for(Integer id: questionIds){
+            questions.add(getQuestionById(id));
+        }
+        return questions;
+    }
 }

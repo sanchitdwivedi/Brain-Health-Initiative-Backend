@@ -37,4 +37,8 @@ public class PatientService {
         }
     }
 
+    public Patient getPatientByMobileAndName(String name, Long mobile){
+        return patientDao.findByMobileAndName(name, mobile);
+    }
+
 }

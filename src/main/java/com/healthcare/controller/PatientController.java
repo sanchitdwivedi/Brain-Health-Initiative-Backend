@@ -44,4 +44,8 @@ public class PatientController {
         return patientService.getPatientsByMobileNo(mob_no);
     }
 
+    @GetMapping("/name/{name}/mobile/{mobile}")
+    public Patient getPatientByMobileAndName(@PathVariable String name, @PathVariable Long mobile){
+        return patientService.getPatientByMobileAndName(name, mobile);
+    }
 }

@@ -61,4 +61,9 @@ public class ConsultationFormService {
     public List<ConsultationForm> getConsultationFormByDoctor(Long id){
         return consultationFormDao.findByDoctor(id);
     }
+
+    public List<ConsultationForm> getFormsWithQuestionnaire(){
+        return consultationFormDao.formsWithQuestionnaire();
+    }
+
 }
