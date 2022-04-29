@@ -3,6 +3,7 @@ import com.healthcare.dao.AdminDao;
 import com.healthcare.dao.RoleDao;
 import com.healthcare.dao.UserDao;
 import com.healthcare.entity.Admin;
+import com.healthcare.entity.Doctor;
 import com.healthcare.entity.Role;
 import com.healthcare.entity.User;
 import com.healthcare.exception.APIRequestException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +39,16 @@ public class AdminService {
         } catch (Exception e){
             throw new APIRequestException("A user is already registered with ID: " + admin.getAdmin().getUserId());
         }
+    }
+    public Admin updatePassword(long id, HashMap<String, String> object){
+        if(!object.containsKey("newPassword")) throw new APIRequestException("Invalid request body");
+        String password = object.get("newPassword");
+        if(password==null || password.length()<8) throw new APIRequestException("Password must be atleast 8 characters long");
+        Admin admin = adminDao.findAdminByUserId(id);
+        if(admin==null || admin.getAdmin().getStatus()==1) throw new APIRequestException("Cannot change password of doctor with id: " + id);
+        admin.getAdmin().setPassword(getEncodedPassword(password));
+        admin.getAdmin().setStatus(1);
+        return adminDao.save(admin);
     }
     public List<Admin> getAllAdmins(){
         List<Admin> admins = (List<Admin>) adminDao.findAll();
