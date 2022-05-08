@@ -36,6 +36,7 @@ public class AdminService {
         user.setPassword(getEncodedPassword(admin.getAdmin().getPassword()));
         user.setRole(role);
         try {
+//            System.out.println("user: "+user);
             userDao.save(user);
             admin.setAdmin(user);
             return adminDao.save(admin);
@@ -78,6 +79,9 @@ public class AdminService {
     }
 
     public Admin updateAdmin(Admin admin) {
+        User user = userDao.findById(admin.getAdmin().getUuid()).get();
+        admin.getAdmin().setPassword(user.getPassword());
+        userDao.save(admin.getAdmin());
         return adminDao.save(admin);
     }
 }

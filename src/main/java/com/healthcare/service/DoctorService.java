@@ -88,6 +88,9 @@ public class DoctorService {
     }
 
     public Doctor updateDoctor(Doctor doctor) {
+        User user = userDao.findById(doctor.getDoctor().getUuid()).get();
+        doctor.getDoctor().setPassword(user.getPassword());
+        userDao.save(doctor.getDoctor());
         return doctorDao.save(doctor);
     }
     public List<Doctor> getDoctorsByRoleId(Integer id){

@@ -41,6 +41,7 @@ public class AdminController {
     {
         return adminService.getAdminById(id);
     }
+
     @GetMapping("")
     public List<Admin> getAllAdmins(){
         List<Admin> doctors = adminService.getAllAdmins();
