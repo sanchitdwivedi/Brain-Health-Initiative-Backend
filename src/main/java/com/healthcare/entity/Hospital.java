@@ -35,10 +35,13 @@ public class Hospital {
     @JoinColumn(name="level", nullable = false)
     private Level level;
 
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private Integer active = 1;
+
     public Hospital() {
     }
 
-    public Hospital(Integer hospitalId, String hospitalName, String state, String district, String city, Integer pincode, Level level) {
+    public Hospital(Integer hospitalId, String hospitalName, String state, String district, String city, Integer pincode, Level level, Integer active) {
         this.hospitalId = hospitalId;
         this.hospitalName = hospitalName;
         this.state = state;
@@ -46,6 +49,7 @@ public class Hospital {
         this.city = city;
         this.pincode = pincode;
         this.level = level;
+        this.active = active;
     }
 
     public Integer getHospitalId() {
@@ -104,6 +108,14 @@ public class Hospital {
         this.level = level;
     }
 
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "Hospital{" +
@@ -114,6 +126,7 @@ public class Hospital {
                 ", city='" + city + '\'' +
                 ", pincode=" + pincode +
                 ", level=" + level +
+                ", active=" + active +
                 '}';
     }
 }

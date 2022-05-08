@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +29,8 @@ public class DoctorService {
     private HospitalDao hospitalDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
 
     public Doctor createDoctor(Doctor doctor){
         Role role = roleDao.findByRoleName(doctor.getDoctor().getRole().getRoleName());
@@ -49,7 +53,11 @@ public class DoctorService {
 
     public List<Doctor> getAllDoctors(){
         List<Doctor> doctors = (List<Doctor>) doctorDao.findAll();
-        return doctors;
+        List<Doctor> currDoctors = new ArrayList<>();
+        for(Doctor doctor: doctors){
+            if(doctor.getDoctor().getActive()==1) currDoctors.add(doctor);
+        }
+        return currDoctors;
     }
 
     public Doctor getDoctorByHealthId(long id){
@@ -72,8 +80,11 @@ public class DoctorService {
     }
 
     public void deleteDoctor(Integer id) {
-        //Doctor d=doctorDao.findByHealthId(id);
-        doctorDao.deleteById(id);
+//        Doctor d=doctorDao.findByHealthId(id);
+//        doctorDao.deleteById(id);
+        Optional<User> user = userDao.findById(id);
+        if(!user.isPresent() || user.get().getActive()==0) throw new APIRequestException("Invalid doctor");
+         userService.deleteUser(user.get());
     }
 
     public Doctor updateDoctor(Doctor doctor) {

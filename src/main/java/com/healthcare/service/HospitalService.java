@@ -9,7 +9,9 @@ import com.healthcare.exception.APIRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HospitalService {
@@ -31,16 +33,25 @@ public class HospitalService {
 
     public List<Hospital> getAllHospitals(){
         List<Hospital> hospitals = (List<Hospital>) hospitalDao.findAll();
-        return hospitals;
+        List<Hospital> currHospitals = new ArrayList<>();
+        for(Hospital hospital: hospitals){
+            if(hospital.getActive()==1) currHospitals.add(hospital);
+        }
+        return currHospitals;
     }
 
     public Hospital getHospitalById(int id){
-        return hospitalDao.findById(id).get();
+        Optional<Hospital> hospital = hospitalDao.findById(id);
+        if(!hospital.isPresent() || hospital.get().getActive()==0) throw new APIRequestException("Invalid hospital");
+        return hospital.get();
     }
 
     public void deleteHospital(Integer id) {
-        hospitalDao.deleteById(id);
-
+//        hospitalDao.deleteById(id);
+        Optional<Hospital> hospital = hospitalDao.findById(id);
+        if(!hospital.isPresent()) throw new APIRequestException("Invalid hospital");
+        hospital.get().setActive(0);
+        hospitalDao.save(hospital.get());
     }
 
     public Hospital updateAdmin(Hospital hospital) {

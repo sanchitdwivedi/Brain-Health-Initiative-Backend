@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,8 @@ public class AdminService {
     private RoleDao roleDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
 
     public Admin createAdmin(Admin admin){
         Role role = roleDao.findByRoleName(admin.getAdmin().getRole().getRoleName());
@@ -52,7 +55,11 @@ public class AdminService {
     }
     public List<Admin> getAllAdmins(){
         List<Admin> admins = (List<Admin>) adminDao.findAll();
-        return admins;
+        List<Admin> currAdmins = new ArrayList<>();
+        for(Admin admin: admins){
+            if(admin.getAdmin().getActive()==1) currAdmins.add(admin);
+        }
+        return currAdmins;
     }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
@@ -65,8 +72,9 @@ public class AdminService {
     public void deleteAdmin(int id) {
         Optional<Admin> ad=adminDao.findById(id);
         if(!ad.isPresent()) throw new APIRequestException("Invalid User");
-        User user = userDao.findByUserId(ad.get().getAdmin().getUserId());
-        userDao.deleteById(user.getUuid());
+//        User user = userDao.findByUserId(ad.get().getAdmin().getUserId());
+//        userDao.deleteById(user.getUuid());
+        userService.deleteUser(ad.get().getAdmin());
     }
 
     public Admin updateAdmin(Admin admin) {

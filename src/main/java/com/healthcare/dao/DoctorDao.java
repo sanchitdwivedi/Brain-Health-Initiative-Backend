@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface DoctorDao extends CrudRepository<Doctor, Integer> {
-    @Query("SELECT d FROM Doctor d WHERE d.doctor.userId=?1")
+    @Query("SELECT d FROM Doctor d WHERE d.doctor.userId=?1 and d.doctor.active=1")
     public Doctor findByHealthId(Long id);
 
-    @Query("SELECT d FROM Doctor d WHERE d.doctor.role.roleId=?1")
+    @Query("SELECT d FROM Doctor d WHERE d.doctor.role.roleId=?1 and d.doctor.active=1")
     public List<Doctor> findByRoleId(Integer id);
 }

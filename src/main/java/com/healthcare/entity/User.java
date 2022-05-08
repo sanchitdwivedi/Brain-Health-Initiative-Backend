@@ -33,16 +33,20 @@ public class User {
     @JoinColumn(name="role", nullable = false)
     private Role role;
 
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private Integer active = 1;
+
     public User(){
 
     }
 
-    public User(Integer uuid, Long userId, String password, Role role, Integer status) {
+    public User(Integer uuid, Long userId, String password, Integer status, Role role, Integer active) {
         this.uuid = uuid;
         this.userId = userId;
         this.password = password;
-        this.role = role;
         this.status = status;
+        this.role = role;
+        this.active = active;
     }
 
     public Integer getUuid() {
@@ -69,6 +73,14 @@ public class User {
         this.password = password;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -77,12 +89,12 @@ public class User {
         this.role = role;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getActive() {
+        return active;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setActive(Integer active) {
+        this.active = active;
     }
 
     @Override
@@ -93,6 +105,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", status=" + status +
                 ", role=" + role +
+                ", active=" + active +
                 '}';
     }
 }

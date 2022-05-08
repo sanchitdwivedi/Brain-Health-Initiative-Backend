@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 
 
 public interface AdminDao extends CrudRepository<Admin,Integer> {
-    @Query("SELECT a FROM Admin a WHERE a.admin.userId=?1")
+    @Query("SELECT a FROM Admin a WHERE a.admin.userId=?1 and a.admin.active=1")
     public Admin findAdminByUserId(Long id);
 
 }
